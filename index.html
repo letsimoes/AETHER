@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AETHER - HRZ Energia</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1a2744 50%, #1e293b 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+        .logo {
+            font-size: 13px;
+            color: #94a3b8;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo img { height: 22px; opacity: 0.8; }
+        .title {
+            font-size: 130px;
+            font-weight: 900;
+            letter-spacing: -4px;
+            line-height: 1;
+            background: linear-gradient(90deg, #e0f2fe 0%, #00d4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+        .subtitle {
+            font-size: 13px;
+            color: #64748b;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 80px;
+        }
+        .buttons { display: flex; gap: 40px; }
+
+        /* CARD ESTILO ATLAS - BRANCO */
+        .btn {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0;
+            padding: 40px 40px 36px 40px;
+            background: white;
+            border-radius: 24px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            color: #1e293b;
+            width: 280px;
+            border-top: 5px solid;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+        }
+        .btn:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0,0,0,0.25); }
+
+        .btn-transmissao { border-top-color: #3b82f6; }
+        .btn-geracao     { border-top-color: #f97316; }
+
+        /* ÍCONE COM FUNDO CIRCULAR */
+        .icon-wrap {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+        .btn-transmissao .icon-wrap { background: #eff6ff; }
+        .btn-geracao     .icon-wrap { background: #fff7ed; }
+
+        .icon-wrap svg { width: 30px; height: 30px; }
+
+        .btn-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .btn-transmissao .btn-label { color: #3b82f6; }
+        .btn-geracao     .btn-label { color: #f97316; }
+
+        .btn-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 24px;
+        }
+
+        .btn-enter {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .btn-transmissao .btn-enter { color: #3b82f6; }
+        .btn-geracao     .btn-enter { color: #f97316; }
+
+        .footer {
+            margin-top: 60px;
+            font-size: 12px;
+            color: #334155;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="C:/Users/Leticia Simões/Novo Horizon Participações S.A/HRZ - Operations/16. PMO HRZ/00 - Dashboard/img/logo-hrz.png" style="height:28px;">
+    </div>
+
+    <div class="title">AETHER</div>
+    <div class="subtitle">Plataforma de Gestão de Ativos</div>
+
+    <div class="buttons">
+
+        <!-- TRANSMISSÃO -->
+        <a class="btn btn-transmissao" href="transmissao.html">
+            <div class="icon-wrap">
+                <img src="C:/Users/Leticia Simões/Novo Horizon Participações S.A/HRZ - Operations/16. PMO HRZ/00 - Dashboard/img/torre-removebg-preview.png" style="width:26px;height:38px;">
+            </div>
+            <div class="btn-label">AETHER</div>
+            <div class="btn-title">TRANSMISSÃO</div>
+            <div class="btn-enter">Entrar →</div>
+        </a>
+
+        <!-- GERAÇÃO -->
+        <a class="btn btn-geracao" href="geracao.html">
+            <div class="icon-wrap">
+                <img src="C:/Users/Leticia Simões/Novo Horizon Participações S.A/HRZ - Operations/16. PMO HRZ/00 - Dashboard/img/turbina-removebg-preview.png" style="width:34px;height:34px;">
+            </div>
+            <div class="btn-label">AETHER</div>
+            <div class="btn-title">GERAÇÃO</div>
+            <div class="btn-enter">Entrar →</div>
+        </a>
+
+    </div>
+
+    <div class="footer">HRZ Energia · AETHER Platform</div>
+</body>
+</html>
