@@ -51,7 +51,14 @@
                 <div class="sidebar-logo-sub">Transmissão</div>
             </div>
             <div class="sidebar-nav">
-                <div class="nav-label">Projetos</div>
+                <div class="nav-label">Operação</div>
+                <button class="item" onclick="load('index_gestaopv.html', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                    </svg>
+                    Gestão PV
+                </button>
+                <div class="nav-label" style="margin-top:16px;">Projetos</div>
                 <button class="item active" onclick="load('index_spectra.html', this)">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
@@ -83,7 +90,7 @@
             document.getElementById('sidebar').classList.toggle('open');
             document.getElementById('overlay').classList.toggle('open');
         }
-        window.onload = function() { load('index_spectra.html', document.querySelector('.item')); }
+        window.onload = function() { load('index_bess.html', document.querySelector('.item')); }
     </script>
 </body>
 </html>
