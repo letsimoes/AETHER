@@ -101,7 +101,7 @@ h1{font-size:22px;font-weight:600;}
            <div class="p-status" data-pt="Em andamento" data-en="On track">Em andamento</div></div>
     </button>
   </div>
-  <div class="sidebar-footer" data-pt="Atualizado em 26/06/2026 21:02 · HRZ PMO" data-en="Generated on 26/06/2026 21:02 · HRZ PMO">Atualizado em 26/06/2026 21:02 · HRZ PMO</div>
+  <div class="sidebar-footer" data-pt="Atualizado em 29/06/2026 10:58 · HRZ PMO" data-en="Generated on 29/06/2026 10:58 · HRZ PMO">Atualizado em 29/06/2026 10:58 · HRZ PMO</div>
 </div>
 
 <div class="main">
@@ -114,7 +114,7 @@ h1{font-size:22px;font-weight:600;}
       <div>
         <button id="langBtn" onclick="toggleLang()" style="font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;border:2px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;transition:all .2s;">🌐 EN</button>
         <button id="btnGerarPDF" onclick="gerarPDF()" style="margin-left:8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;border:2px solid #8B1A1A;background:transparent;color:#8B1A1A;cursor:pointer;transition:all .2s;" data-pt="⬇ Gerar PDF" data-en="⬇ Export PDF">⬇ Gerar PDF</button>
-        <div class="updated" data-pt="Atualizado em 26/06/2026 21:02" data-en="Updated on 26/06/2026 21:02">Atualizado em 26/06/2026 21:02</div>
+        <div class="updated" data-pt="Atualizado em 29/06/2026 10:58" data-en="Updated on 29/06/2026 10:58">Atualizado em 29/06/2026 10:58</div>
       </div>
     </div>
 
@@ -853,11 +853,56 @@ h1{font-size:22px;font-weight:600;}
     <div class="grid2" style="margin-top:0;" id="gridSMSQualidade">
       <div class="card" style="margin-bottom:0;">
         <div class="card-title" data-pt="Saúde e Segurança — TRIR / Pirâmide de Dupont" data-en="Health & Safety — TRIR / DuPont Pyramid">Saúde e Segurança — TRIR / Pirâmide de Dupont</div>
-        <div class="sub" style="padding:12px;" data-pt="Preencha os dados no Excel." data-en="Fill in the Excel file.">Preencha os dados no Excel.</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;">
+      <div style="background:#F8F8F6;border-radius:8px;padding:10px 12px;">
+        <div style="font-size:11px;color:#9E9C97;margin-bottom:4px;">TRIR</div>
+        <div style="font-size:20px;font-weight:600;color:#2D6A3F;">0</div>
+        <div style="font-size:10px;color:#9E9C97;">Meta: 0,00</div>
+      </div>
+      <div style="background:#F8F8F6;border-radius:8px;padding:10px 12px;">
+        <div style="font-size:11px;color:#9E9C97;margin-bottom:4px;" data-pt="HH trabalhadas" data-en="Working hours">HH trabalhadas</div>
+        <div style="font-size:20px;font-weight:600;color:#1A1917;">4320</div>
+        <div style="font-size:10px;color:#9E9C97;" data-pt="acumulado" data-en="cumulative">acumulado</div>
+      </div>
+      <div style="background:#F8F8F6;border-radius:8px;padding:10px 12px;">
+        <div style="font-size:11px;color:#9E9C97;margin-bottom:4px;" data-pt="Acidentes" data-en="Accidents">Acidentes</div>
+        <div style="font-size:20px;font-weight:600;color:#2D6A3F;">0</div>
+        <div style="font-size:10px;color:#9E9C97;" data-pt="c/ afastamento" data-en="with leave">c/ afastamento</div>
+      </div>
+    </div><div style="font-size:10px;font-weight:500;color:#9E9C97;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;" data-pt="Pirâmide de Dupont" data-en="DuPont Pyramid">Pirâmide de Dupont</div><div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:0.5px solid rgba(0,0,0,.06);">
+          <div style="width:8px;height:8px;border-radius:50%;background:#8B1A1A;flex-shrink:0;"></div>
+          <div style="font-size:11px;color:#6B6860;flex:1;">Acidente fatal</div>
+          <div style="font-size:12px;font-weight:600;color:#8B1A1A;">0</div>
+        </div><div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:0.5px solid rgba(0,0,0,.06);">
+          <div style="width:8px;height:8px;border-radius:50%;background:#8B1A1A;flex-shrink:0;"></div>
+          <div style="font-size:11px;color:#6B6860;flex:1;">Acidente c/ afastamento</div>
+          <div style="font-size:12px;font-weight:600;color:#8B1A1A;">0</div>
+        </div><div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:0.5px solid rgba(0,0,0,.06);">
+          <div style="width:8px;height:8px;border-radius:50%;background:#C8931A;flex-shrink:0;"></div>
+          <div style="font-size:11px;color:#6B6860;flex:1;">Acidente s/ afastamento</div>
+          <div style="font-size:12px;font-weight:600;color:#C8931A;">0</div>
+        </div><div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:0.5px solid rgba(0,0,0,.06);">
+          <div style="width:8px;height:8px;border-radius:50%;background:#C8931A;flex-shrink:0;"></div>
+          <div style="font-size:11px;color:#6B6860;flex:1;">Quase acidente</div>
+          <div style="font-size:12px;font-weight:600;color:#C8931A;">0</div>
+        </div><div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:0.5px solid rgba(0,0,0,.06);">
+          <div style="width:8px;height:8px;border-radius:50%;background:#2D6A3F;flex-shrink:0;"></div>
+          <div style="font-size:11px;color:#6B6860;flex:1;">Ato inseguro / desvio</div>
+          <div style="font-size:12px;font-weight:600;color:#2D6A3F;">0</div>
+        </div>
       </div>
       <div class="card" style="margin-bottom:0;">
         <div class="card-title" data-pt="Qualidade — Desvios / NCs" data-en="Quality — Deviations / NCs">Qualidade — Desvios / NCs</div>
-        <div class="sub" style="padding:12px;" data-pt="Preencha os dados no Excel." data-en="Fill in the Excel file.">Preencha os dados no Excel.</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
+      <div style="background:#F8F8F6;border-radius:8px;padding:10px 12px;">
+        <div style="font-size:11px;color:#9E9C97;margin-bottom:4px;" data-pt="NCs abertas" data-en="Open NCs">NCs abertas</div>
+        <div style="font-size:20px;font-weight:600;color:#2D6A3F;">0</div>
+      </div>
+      <div style="background:#F8F8F6;border-radius:8px;padding:10px 12px;">
+        <div style="font-size:11px;color:#9E9C97;margin-bottom:4px;" data-pt="NCs fechadas" data-en="Closed NCs">NCs fechadas</div>
+        <div style="font-size:20px;font-weight:600;color:#2D6A3F;">0</div>
+      </div>
+    </div><div style="font-size:10px;font-weight:500;color:#9E9C97;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;" data-pt="Desvios em aberto" data-en="Open deviations">Desvios em aberto</div><div style="font-size:12px;color:#9E9C97;padding:8px 0;" data-pt="Nenhum desvio em aberto." data-en="No open deviations.">Nenhum desvio em aberto.</div>
       </div>
     </div>
   </div>
