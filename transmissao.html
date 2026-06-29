@@ -77,13 +77,13 @@
         function load(url, btn) {
             document.querySelectorAll('.item').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            document.getElementById('frame').src = url;
-            if (window.innerWidth <= 768) toggleMenu();
+            document.getElementById('main').innerHTML = '<iframe src="' + url + '" style="flex:1;border:none;width:100%;height:100%;"></iframe>';
         }
         function toggleMenu() {
             document.getElementById('sidebar').classList.toggle('open');
             document.getElementById('overlay').classList.toggle('open');
         }
+        window.onload = function() { load('index_bess.html', document.querySelector('.item')); }
     </script>
 </body>
 </html>
