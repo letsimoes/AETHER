@@ -51,7 +51,20 @@
                 <div class="sidebar-logo-sub">Geração</div>
             </div>
             <div class="sidebar-nav">
-                <div class="nav-label">Projetos</div>
+                <div class="nav-label">Operação</div>
+                <button class="item" onclick="load('index_geracao.html', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                    </svg>
+                    Geração
+                </button>
+                <button class="item" onclick="load('index_curtailment.html', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 18l6-6m-6 0l6 6M3 12h18"/>
+                    </svg>
+                    Curtailment
+                </button>
+                <div class="nav-label" style="margin-top:16px;">Projetos</div>
                 <button class="item active" onclick="load('index_bess.html', this)">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
