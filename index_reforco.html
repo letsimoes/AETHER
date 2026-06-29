@@ -101,7 +101,7 @@ h1{font-size:22px;font-weight:600;}
            <div class="p-status" data-pt="Em andamento" data-en="On track">Em andamento</div></div>
     </button>
   </div>
-  <div class="sidebar-footer" data-pt="Atualizado em 29/06/2026 11:34 · HRZ PMO" data-en="Generated on 29/06/2026 11:34 · HRZ PMO">Atualizado em 29/06/2026 11:34 · HRZ PMO</div>
+  <div class="sidebar-footer" data-pt="Atualizado em 29/06/2026 11:37 · HRZ PMO" data-en="Generated on 29/06/2026 11:37 · HRZ PMO">Atualizado em 29/06/2026 11:37 · HRZ PMO</div>
 </div>
 
 <div class="main">
@@ -114,7 +114,7 @@ h1{font-size:22px;font-weight:600;}
       <div>
         <button id="langBtn" onclick="toggleLang()" style="font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;border:2px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;transition:all .2s;">🌐 EN</button>
         <button id="btnGerarPDF" onclick="gerarPDF()" style="margin-left:8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;border:2px solid #8B1A1A;background:transparent;color:#8B1A1A;cursor:pointer;transition:all .2s;" data-pt="⬇ Gerar PDF" data-en="⬇ Export PDF">⬇ Gerar PDF</button>
-        <div class="updated" data-pt="Atualizado em 29/06/2026 11:34" data-en="Updated on 29/06/2026 11:34">Atualizado em 29/06/2026 11:34</div>
+        <div class="updated" data-pt="Atualizado em 29/06/2026 11:37" data-en="Updated on 29/06/2026 11:37">Atualizado em 29/06/2026 11:37</div>
       </div>
     </div>
 
@@ -1611,9 +1611,9 @@ function toggleLang() {
     return (map[mes] || mes) + '/' + resto;
   };
   [curvaFin].forEach(ch => { if (!ch) return; ch.data.labels = ch.data.labels.map(traduzirMes); ch.update(); });
-  curvaFin.data.datasets[0].label = isEN ? 'Actual' : 'Realizado';
-  curvaFin.data.datasets[1].label = isEN ? 'Planned Actis' : 'Planejado Actis';
-  curvaFin.data.datasets[2].label = isEN ? 'Actual + Forecast' : 'Realizado + Previsão';
+  curvaFin.data.datasets[0].label = isEN ? 'Planned Actis' : 'Planejado Actis';
+  curvaFin.data.datasets[1].label = isEN ? 'Actual + Forecast' : 'Realizado + Previsão';
+  curvaFin.data.datasets[2].label = isEN ? 'Actual' : 'Realizado';
   curvaFin.update();
 
   const cpChart = window._curvaProjectChartInstance;
