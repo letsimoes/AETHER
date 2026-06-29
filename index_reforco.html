@@ -101,7 +101,7 @@ h1{font-size:22px;font-weight:600;}
            <div class="p-status" data-pt="Em andamento" data-en="On track">Em andamento</div></div>
     </button>
   </div>
-  <div class="sidebar-footer" data-pt="Atualizado em 29/06/2026 11:37 · HRZ PMO" data-en="Generated on 29/06/2026 11:37 · HRZ PMO">Atualizado em 29/06/2026 11:37 · HRZ PMO</div>
+  <div class="sidebar-footer" data-pt="Atualizado em 29/06/2026 11:41 · HRZ PMO" data-en="Generated on 29/06/2026 11:41 · HRZ PMO">Atualizado em 29/06/2026 11:41 · HRZ PMO</div>
 </div>
 
 <div class="main">
@@ -114,7 +114,7 @@ h1{font-size:22px;font-weight:600;}
       <div>
         <button id="langBtn" onclick="toggleLang()" style="font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;border:2px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;transition:all .2s;">🌐 EN</button>
         <button id="btnGerarPDF" onclick="gerarPDF()" style="margin-left:8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;border:2px solid #8B1A1A;background:transparent;color:#8B1A1A;cursor:pointer;transition:all .2s;" data-pt="⬇ Gerar PDF" data-en="⬇ Export PDF">⬇ Gerar PDF</button>
-        <div class="updated" data-pt="Atualizado em 29/06/2026 11:37" data-en="Updated on 29/06/2026 11:37">Atualizado em 29/06/2026 11:37</div>
+        <div class="updated" data-pt="Atualizado em 29/06/2026 11:41" data-en="Updated on 29/06/2026 11:41">Atualizado em 29/06/2026 11:41</div>
       </div>
     </div>
 
@@ -979,7 +979,7 @@ window._curvaProjectChartInstance = new Chart(document.getElementById('curvaProj
       { label: '% Realizado', data: cpReal.map(v => v > 0 ? v : null), borderColor: '#2D6A3F', borderWidth: 2.5, pointBackgroundColor: '#2D6A3F', pointRadius: 5, tension: 0.4, fill: false },
     ]},
     options: { responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { position: 'bottom', labels: { font: { family: 'DM Sans', size: 12 } } }, tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + (ctx.parsed.y || 0).toFixed(2) + '%' } } },
+      plugins: { legend: { position: 'bottom', labels: { font: { family: 'DM Sans', size: 12 }, sort: (a, b) => { const o={'Planejado Actis':0,'Realizado + Previsão':1,'Realizado':2,'Planned Actis':0,'Actual + Forecast':1,'Actual':2}; return (o[a.text]??9)-(o[b.text]??9); } } }, tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + (ctx.parsed.y || 0).toFixed(2) + '%' } } },
       scales: { y: { min: 0, max: 100, ticks: { callback: v => v + '%', font: { family: 'DM Sans', size: 11 } }, grid: { color: 'rgba(0,0,0,0.05)' } }, x: { ticks: { font: { family: 'DM Sans', size: 11 }, maxRotation: 45 }, grid: { display: false } } }
     }
   });
