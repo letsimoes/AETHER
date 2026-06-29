@@ -74,7 +74,7 @@ h1{font-size:22px;font-weight:600;}
     </div>
     <div style="text-align:right;">
       <button id="langBtn" onclick="toggleLang()" style="font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;border:2px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;transition:all .2s;">🌐 EN</button>
-      <div class="updated" data-pt="Atualizado em 29/06/2026 00:41" data-en="Updated on 29/06/2026 00:41">Atualizado em 29/06/2026 00:41</div>
+      <div class="updated" data-pt="Atualizado em 29/06/2026 00:48" data-en="Updated on 29/06/2026 00:48">Atualizado em 29/06/2026 00:48</div>
     </div>
   </div>
 
@@ -166,27 +166,55 @@ h1{font-size:22px;font-weight:600;}
   <!-- GOVERNANÇA -->
   <div class="card">
     <div class="card-title" data-pt="Governança do projeto — Stage 1" data-en="Project governance — Stage 1">Governança do projeto — Stage 1</div>
-    <div style="text-align:center;margin-bottom:5px;">
-      <div style="display:inline-block;background:#0D1E3D;color:#fff;border:2px solid #C8931A;border-radius:8px;min-width:360px;padding:10px 20px;text-align:center;font-size:11px;font-weight:500;">
-        HRZ Board of Directors + ACTIS Brasil
-        <div style="font-size:9px;color:rgba(255,255,255,.6);margin-top:2px;" data-pt="" data-en=""></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:0;padding:0 20px;">
+
+      <!-- BOARD (Topo) -->
+      <div style="position:relative;width:100%;display:flex;justify-content:center;margin-bottom:0;">
+        <div style="position:absolute;left:50%;top:-12px;width:2px;height:12px;background:#A67C2E;transform:translateX(-50%);"></div>
+        <div style="display:inline-flex;background:#0D1E3D;color:#fff;border:2px solid #C8931A;border-radius:6px;padding:12px 28px;text-align:center;flex-direction:column;align-items:center;min-width:420px;position:relative;z-index:2;">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.3px;">HRZ Board of Directors + ACTIS Brasil</div>
+          <div style="font-size:9px;color:rgba(255,255,255,.6);margin-top:3px;" data-pt="" data-en=""></div>
+        </div>
       </div>
-    </div>
-    <div style="width:1px;height:14px;background:rgba(0,0,0,.15);margin:0 auto;"></div>
-    <div style="text-align:center;margin-bottom:5px;">
-      <div style="display:inline-block;background:#1B3A6B;color:#fff;border-radius:8px;min-width:240px;padding:8px 20px;font-size:11px;font-weight:500;" data-pt="COO / Project Sponsor — Italo Augusto David" data-en="COO / Project Sponsor — Italo Augusto David">COO / Project Sponsor — Italo Augusto David</div>
-    </div>
-    <div style="width:1px;height:14px;background:rgba(0,0,0,.15);margin:0 auto;"></div>
-    <div style="text-align:center;margin-bottom:12px;">
-      <div style="display:inline-block;background:#2E6E7E;color:#fff;border-radius:8px;min-width:200px;padding:8px 20px;font-size:11px;font-weight:500;" data-pt="Project Manager — Higor Américo" data-en="Project Manager — Higor Américo">Project Manager — Higor Américo</div>
-    </div>
-    <div style="position:relative;margin-bottom:8px;">
-      <div style="position:absolute;left:50%;top:0;width:1px;height:14px;background:rgba(0,0,0,.15);transform:translateX(-50%);"></div>
-      <div style="position:absolute;left:10%;right:10%;top:14px;height:1px;background:rgba(0,0,0,.15);"></div>
-    </div>
-    <div style="height:14px;"></div>
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px;">
-      <div style="background:#E8EFF8;border-radius:8px;padding:10px;border:0.5px solid #1B3A6B33;">
+
+      <!-- CONNECTOR BOARD → SPONSOR -->
+      <div style="width:2px;height:24px;background:#A67C2E;margin:0;"></div>
+
+      <!-- SPONSOR -->
+      <div style="position:relative;width:100%;display:flex;justify-content:center;margin-bottom:0;">
+        <div style="position:absolute;left:50%;top:-12px;width:2px;height:12px;background:#A67C2E;transform:translateX(-50%);"></div>
+        <div style="display:inline-flex;background:#1B3A6B;color:#fff;border-radius:6px;padding:10px 28px;text-align:center;flex-direction:column;align-items:center;min-width:360px;position:relative;z-index:2;">
+          <div style="font-size:11px;font-weight:700;" data-pt="COO / Project Sponsor — Italo Augusto David" data-en="COO / Project Sponsor — Italo Augusto David">COO / Project Sponsor — Italo Augusto David</div>
+        </div>
+      </div>
+
+      <!-- CONNECTOR SPONSOR → PM -->
+      <div style="width:2px;height:24px;background:#A67C2E;margin:0;"></div>
+
+      <!-- PM -->
+      <div style="position:relative;width:100%;display:flex;justify-content:center;margin-bottom:0;">
+        <div style="position:absolute;left:50%;top:-12px;width:2px;height:12px;background:#A67C2E;transform:translateX(-50%);"></div>
+        <div style="display:inline-flex;background:#2E6E7E;color:#fff;border-radius:6px;padding:10px 28px;text-align:center;flex-direction:column;align-items:center;min-width:320px;position:relative;z-index:2;">
+          <div style="font-size:11px;font-weight:700;" data-pt="Project Manager — Higor Américo" data-en="Project Manager — Higor Américo">Project Manager — Higor Américo</div>
+        </div>
+      </div>
+
+      <!-- CONNECTOR PM → TEAM -->
+      <div style="position:relative;width:100%;display:flex;justify-content:center;margin-bottom:0;">
+        <div style="width:2px;height:24px;background:#A67C2E;"></div>
+      </div>
+
+      <!-- HORIZONTAL LINE + VERTICAL DROPS -->
+      <div style="position:relative;width:80%;height:40px;display:flex;align-items:flex-start;justify-content:space-around;margin:0;">
+        <!-- Linha horizontal -->
+        <div style="position:absolute;top:0;left:0;right:0;width:100%;height:2px;background:#A67C2E;"></div>
+        <!-- Drops para cada membro -->
+        <div style="position:absolute;width:2px;height:20px;background:#A67C2E;top:2px;left:0.0%;transform:translateX(-50%);"></div><div style="position:absolute;width:2px;height:20px;background:#A67C2E;top:2px;left:25.0%;transform:translateX(-50%);"></div><div style="position:absolute;width:2px;height:20px;background:#A67C2E;top:2px;left:50.0%;transform:translateX(-50%);"></div><div style="position:absolute;width:2px;height:20px;background:#A67C2E;top:2px;left:75.0%;transform:translateX(-50%);"></div><div style="position:absolute;width:2px;height:20px;background:#A67C2E;top:2px;left:100.0%;transform:translateX(-50%);"></div>
+      </div>
+
+      <!-- TEAM GRID (5 colunas) -->
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;width:100%;margin-top:8px;padding:0 2px;">
+        <div style="background:#E8EFF8;border-radius:8px;padding:10px;border:0.5px solid #1B3A6B33;">
           <div style="font-size:10px;font-weight:600;color:#1B3A6B;" data-pt="PMO" data-en="PMO">PMO</div>
           <div style="font-size:10px;color:#4A7FBF;margin-top:2px;">Leticia Simoes</div>
           <div style="font-size:9px;color:#6B6860;margin-top:3px;line-height:1.4;" data-pt="Planejamento, controle, cronograma, reporting, milestone tracking" data-en="Planning, monitoring, scheduling, reporting, milestone tracking">Planejamento, controle, cronograma, reporting, milestone tracking</div>
@@ -207,6 +235,8 @@ h1{font-size:22px;font-weight:600;}
           <div style="font-size:10px;color:#4A7FBF;margin-top:2px;">TBD</div>
           <div style="font-size:9px;color:#6B6860;margin-top:3px;line-height:1.4;" data-pt="consultor técnico especializado" data-en="specialized technical consultant">consultor técnico especializado</div>
         </div>
+      </div>
+
     </div>
   </div>
 
