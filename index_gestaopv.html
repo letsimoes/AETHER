@@ -76,9 +76,9 @@ input,select,textarea{font-family:inherit;font-size:13px;color:var(--text)}
 .filters .search input{width:100%;padding:7px 11px 7px 30px;border-radius:8px;border:1px solid var(--border);background:var(--card)}
 .filters .search::before{content:'⌕';position:absolute;left:10px;top:50%;transform:translateY(-52%);color:var(--faint);font-size:15px}
 
-/* auto-fit: o quadro decide quantas colunas cabem — funciona com e sem a sidebar do AETHER */
-.kb{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:11px}
-@media(max-width:1050px){.kb{grid-template-columns:1fr}}
+/* 3 raias SEMPRE lado a lado. Em tela estreita, rola na horizontal em vez de empilhar. */
+.kb{display:grid;grid-template-columns:repeat(3,minmax(300px,1fr));gap:11px}
+@media(max-width:980px){.kb{overflow-x:auto;padding-bottom:6px}}
 .kb-col{background:#FAFBFC;border:1px solid var(--border);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
 .kb-head{padding:12px 14px;background:var(--card);border-bottom:3px solid var(--accent-mid)}
 .kb-head .kh-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
@@ -1942,6 +1942,6 @@ document.addEventListener('DOMContentLoaded', function(){
   ativarSecao('eventos');
 });
 </script>
-<!-- Gerado em 14/07/2026 19:35 · gerar_gestaopv.py · AETHER HRZ -->
+<!-- Gerado em 14/07/2026 23:56 · gerar_gestaopv.py · AETHER HRZ -->
 </body>
 </html>
