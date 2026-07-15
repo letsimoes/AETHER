@@ -335,13 +335,13 @@ details.tblfold[open]>summary::before{content:'▾ '}
     </div>
 
     <div class="card" style="margin-bottom:13px">
-      <div class="sec-title">Desconto Mês / RAP — base ano · meta 0,50% a.a. por grupo</div>
+      <div class="sec-title">Desconto PV / RAP — base ano · meta 0,50% a.a. por grupo</div>
       <div id="pvRapWrap"></div>
     </div>
 
     <div class="grid g2">
       <div class="card">
-        <div class="sec-title">Impacto do Desconto Mês na RAP por concessão</div>
+        <div class="sec-title">Impacto do Desconto PV na RAP por concessão</div>
         <div id="barsConcessao"></div>
       </div>
       <div class="card">
@@ -814,7 +814,10 @@ function baseExecutivaSaat(){
   return SAAT.filter(s => {
     if (!(s.descMes > 0)) return false;
     if (!s.mesAp || !execAno) return false;
-    const [ano, mes] = s.mesAp.split('-').map(Number);
+    // Competência por EFEITO NA RECEITA: o desconto sai no mês da apuração + 1.
+    // Ex.: apuração dez/2025 → desconto efetivo jan/2026.
+    const efet = mesMais(s.mesAp, 1);            // 'AAAA-MM' já deslocado
+    const [ano, mes] = efet.split('-').map(Number);
     if (ano !== Number(execAno)) return false;
     if (mes > Number(execMesAte || 12)) return false;
     const conc = concessaoSaat(s);
@@ -823,6 +826,7 @@ function baseExecutivaSaat(){
     return true;
   });
 }
+
 function baseDescontoMes(){ return baseExecutivaSaat(); }
 function descontoMesPorConc(){
   const out = {};
@@ -886,7 +890,7 @@ function renderBars(elId, obj, opt){
   }).join('');
 }
 
-/* ═══════════ Desconto Mês/RAP TABELA ═══════════ */
+/* ═══════════ PV / RAP Ano TABELA ═══════════ */
 function renderPVRAP(){
   const el = document.getElementById('pvRapWrap');
   const pvPor = descontoMesPorConc();
@@ -939,9 +943,9 @@ function renderPVRAP(){
     <table style="width:100%;border-collapse:collapse;font-size:12.5px">
       <thead><tr style="color:var(--muted);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em">
         <th style="text-align:left;padding:5px 9px">Grupo / concessão</th>
-        <th style="text-align:right;padding:5px 9px">Desconto Mês</th>
+        <th style="text-align:right;padding:5px 9px">Desconto PV</th>
         <th style="text-align:right;padding:5px 9px">RAP ano</th>
-        <th style="text-align:right;padding:5px 9px">Desconto Mês/RAP</th>
+        <th style="text-align:right;padding:5px 9px">Desconto PV/RAP ano</th>
         <th style="text-align:left;padding:5px 9px">vs meta 0,50%</th>
       </tr></thead>
       <tbody>${corpo}</tbody>
@@ -1942,6 +1946,6 @@ document.addEventListener('DOMContentLoaded', function(){
   ativarSecao('eventos');
 });
 </script>
-<!-- Gerado em 15/07/2026 10:51 · gerar_gestaopv.py · AETHER HRZ -->
+<!-- Gerado em 15/07/2026 11:16 · gerar_gestaopv.py · AETHER HRZ -->
 </body>
 </html>
