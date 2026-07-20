@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AETHER · Gestão - Parcela Variável — HRZ Energia</title>
+<script src="pv-sync.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1604,12 +1605,14 @@ function abrirDossie(id){
   document.getElementById('dReligEficacia').innerHTML       = opts(DOM_RELIG_EFICACIA, c.religEficacia);
   document.getElementById('ovDoss').classList.add('open');
 }
-function salvarClassificacao(){
+async function salvarClassificacao(){
   if (!dossId) return;
-  const quem = (CLS.__usuario || localStorage.getItem('aether_usuario') || '').trim()
+  const emailLogado = window.AetherPV ? await window.AetherPV.usuarioAtual() : null;
+  const quem = emailLogado
+            || (CLS.__usuario || localStorage.getItem('aether_usuario') || '').trim()
             || (prompt('Seu nome (fica registrado na reclassificação):') || 'Não informado').trim();
-  localStorage.setItem('aether_usuario', quem);
-  CLS[dossId] = {
+  if (!emailLogado) localStorage.setItem('aether_usuario', quem);
+  const dados = {
     equip:                 document.getElementById('dEquip').value,
     tipoDesligamento:      document.getElementById('dTipoDesligamento').value,
     origem:                document.getElementById('dOrigem').value,
@@ -1619,12 +1622,13 @@ function salvarClassificacao(){
     tipoProtecao:          document.getElementById('dTipoProtecao').value,
     tipoAtuacao:           document.getElementById('dTipoAtuacao').value,
     religDesempenho:       document.getElementById('dReligDesempenho').value,
-    religEficacia:         document.getElementById('dReligEficacia').value,
-    validado: true, por: quem, em: new Date().toISOString()
+    religEficacia:         document.getElementById('dReligEficacia').value
   };
+  CLS[dossId] = Object.assign({}, dados, { validado: true, por: quem, em: new Date().toISOString() });
   Store.gravar(CLS);
   document.getElementById('ovDoss').classList.remove('open');
   renderQualidade();
+  if (window.AetherPV) window.AetherPV.salvar(dossId, dados, quem);
 }
 /* ── Exportação para a CYMI: ocorrência + dez colunas de classificação ── */
 function exportarCls(){
@@ -3242,8 +3246,18 @@ function iniciarApp(){
   renderTudo();
   // Visão Executiva é a página inicial do módulo.
   ativarSecao('exec');
+
+  // Dado vivo: busca a classificação mais recente do Supabase por cima do
+  // que veio embutido do gerador/localStorage (que servem só de 1º paint).
+  if (window.AetherPV) {
+    window.AetherPV.buscarAtual().then(atual => {
+      Object.assign(CLS, atual);
+      renderTudo();
+      renderQualidade();
+    });
+  }
 }
 </script>
-<!-- Gerado em 20/07/2026 14:47 · gerar_gestaopv.py · AETHER HRZ -->
+<!-- Gerado em 20/07/2026 16:02 · gerar_gestaopv.py · AETHER HRZ -->
 </body>
 </html>
