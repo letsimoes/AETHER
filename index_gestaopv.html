@@ -1100,7 +1100,15 @@ function fmtCurto(v){
   return Math.round(v);
 }
 function fmtData(iso){ if(!iso) return '—'; const p = iso.slice(0,10).split('-'); return p[2]+'/'+p[1]+'/'+p[0]; }
-function fmtDataHora(iso){ if(!iso) return '—'; return fmtData(iso) + ' ' + iso.slice(11,16); }
+function fmtDataHora(iso){
+  if(!iso) return '—';
+  if(/(Z|[+-]\d{2}:?\d{2})$/.test(iso)){
+    const d = new Date(iso);
+    const pad = n => String(n).padStart(2,'0');
+    return pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear()+' '+pad(d.getHours())+':'+pad(d.getMinutes());
+  }
+  return fmtData(iso) + ' ' + iso.slice(11,16);
+}
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function mesAno(ym){ if(!ym) return '—'; const p = ym.split('-'); return MESES_PT[+p[1]-1] + '/' + p[0]; }
 function mesAbrev(ym){ if(!ym) return '—'; const p = ym.split('-'); return MESES_PT[+p[1]-1].slice(0,3).toLowerCase()+'/'+p[0].slice(2); }
@@ -3276,6 +3284,6 @@ function iniciarApp(){
   }
 }
 </script>
-<!-- Gerado em 20/07/2026 16:36 · gerar_gestaopv.py · AETHER HRZ -->
+<!-- Gerado em 20/07/2026 16:39 · gerar_gestaopv.py · AETHER HRZ -->
 </body>
 </html>
