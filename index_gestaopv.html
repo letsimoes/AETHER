@@ -2085,6 +2085,20 @@ function aplicarMoverJornada(id, col, mesAAAAMM, valorLancamento=null){
   Store.gravarJor(JOR);
   renderJornada();
   renderDispGrid();
+  const eJor = jCustom.find(x => x.id === id && x._jornada);
+  const emailLogadoMov = window.AetherPV && window.AetherPV.usuarioEmail;
+  if (eJor && emailLogadoMov && window.AetherPV) {
+    window.AetherPV.atualizarEvento(id, {
+      cluster: eJor.cluster, concessao: eJor.concessao, equipamento: eJor.equipamento,
+      inicio_ocorrencia: eJor.inicioOcorrencia, fim_ocorrencia: eJor.fimOcorrencia, minutos: eJor.minutos,
+      descritivo: eJor.descritivo, pv_calculada: prox.pvCalculada, pv_apurada: prox.pvApurada,
+      coluna: col, contabilizacoes: prox.contabilizacoes, liquidacoes: prox.liquidacoes, historico: prox.historico
+    }, emailLogadoMov).then(ok => {
+      if (!ok) avisoNuvem('Etapa alterada neste navegador, mas não sincronizada com a nuvem.');
+    });
+  } else if (eJor && !emailLogadoMov) {
+    avisoNuvem('Etapa alterada neste navegador, mas não sincronizada com a nuvem. Entre pela página principal do AETHER (com sua conta Microsoft) para sincronizar.');
+  }
 }
 
 /* ── Seletor de mês ao arrastar ── */
@@ -3375,10 +3389,11 @@ function iniciarApp(){
       });
       popularFiltrosJornada();
       renderJornada();
+      renderDispGrid();
     });
   }
 }
 </script>
-<!-- Gerado em 20/07/2026 17:20 · gerar_gestaopv.py · AETHER HRZ -->
+<!-- Gerado em 20/07/2026 17:28 · gerar_gestaopv.py · AETHER HRZ -->
 </body>
 </html>
