@@ -547,6 +547,7 @@ table.disp-grid .pvdot{display:inline-block;width:9px;height:9px;border-radius:5
       <span class="jper-ate">até</span>
       <input type="date" id="jAte" class="sel jdate" aria-label="Ocorrência até">
       <div class="search"><input id="jBusca" type="text" placeholder="Buscar evento…" aria-label="Buscar evento"></div>
+      <button class="btn ghost" id="btnExpJor" style="padding:5px 11px;font-size:11px">↓ Exportar (Excel)</button>
     </div>
     <div id="viewJornada" class="jkb"></div>
 
@@ -1689,6 +1690,40 @@ function exportarCls(){
   a.download = 'AETHER_classificacao_eventos_' + new Date().toISOString().slice(0,10) + '.csv';
   a.click(); URL.revokeObjectURL(a.href);
 }
+/* ── Exportação da Jornada do Evento ── */
+function exportarJornada(){
+  const COLS = [
+    'Evento','Cluster','Concessão','Equipamento (FT)','Início da ocorrência','Fim da ocorrência','Minutos',
+    'Descritivo','PV Calculada','PV Apurada','Etapa','Total contabilizado','Total liquidado',
+    'Criado por','Criado em','Última alteração por','Última alteração em'
+  ];
+  const cel = v => {
+    const s = String(v === null || v === undefined ? '' : v).replace(/"/g,'""').replace(/[\r\n]+/g,' ');
+    return '"' + s + '"';
+  };
+  const linhas = jCustom.filter(e => e._jornada).map(e => {
+    const reg = JOR[e.id] || {};
+    const totalContab = (reg.contabilizacoes||[]).reduce((s,x)=>s+(x.valor||0),0);
+    const totalLiq = (reg.liquidacoes||[]).reduce((s,x)=>s+(x.valor||0),0);
+    const etapaLbl = (JCOLS.find(c=>c.id===jColuna(e))||{}).t || reg.col || '';
+    const hist = Array.isArray(reg.historico) ? reg.historico : [];
+    const ultimo = hist[0] || {};
+    const primeiro = hist[hist.length-1] || {};
+    return [
+      e.id, e.cluster, jConcessaoEvento(e), e.equipamento,
+      fmtDataHora(e.inicioOcorrencia), fmtDataHora(e.fimOcorrencia), e.minutos || 0,
+      e.descritivo, reg.pvCalculada || 0, reg.pvApurada || 0, etapaLbl,
+      totalContab, totalLiq,
+      primeiro.por || '', primeiro.em ? fmtData(primeiro.em) : '',
+      ultimo.por || '', ultimo.em ? fmtData(ultimo.em) : ''
+    ].map(cel).join(';');
+  });
+  const csv = '﻿' + COLS.map(cel).join(';') + '\r\n' + linhas.join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8'}));
+  a.download = 'AETHER_jornada_eventos_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click(); URL.revokeObjectURL(a.href);
+}
 
 function importarCls(file){
   const fr = new FileReader();
@@ -1741,6 +1776,7 @@ function valorApuradoEvento(e, reg=JOR[e.id]||{}){
 function mesAtualAAAAMM(){ return localDateTimeValue().slice(0,7); }
 
 function usuarioJornada(){
+  if (window.AetherPV && window.AetherPV.usuarioEmail) return window.AetherPV.usuarioEmail;
   let nome = (localStorage.getItem('aether_usuario') || '').trim();
   if (!nome){ nome = 'Letícia'; localStorage.setItem('aether_usuario', nome); }
   return nome;
@@ -2477,6 +2513,20 @@ function salvarNovoJornada(){
   document.getElementById('ovNovoJor').classList.remove('open');
   popularFiltrosJornada();
   renderJornada();
+  avisoToast('Evento ' + id + ' criado com sucesso.', 'ok');
+  const emailLogado = window.AetherPV && window.AetherPV.usuarioEmail;
+  if (emailLogado && window.AetherPV) {
+    window.AetherPV.criarEvento({
+      evento_id: id, cluster: clusterV, concessao, equipamento,
+      inicio_ocorrencia: inicio, fim_ocorrencia: fim, minutos,
+      descritivo, pv_calculada: pv, pv_apurada: pv,
+      coluna: 'calculada', contabilizacoes: [], liquidacoes: [], historico: JOR[id].historico
+    }, emailLogado).then(ok => {
+      if (!ok) avisoNuvem('Evento salvo neste navegador, mas não sincronizado com a nuvem. Tente salvar novamente em instantes.');
+    });
+  } else {
+    avisoNuvem('Evento salvo neste navegador, mas não sincronizado com a nuvem. Entre pela página principal do AETHER (com sua conta Microsoft) para sincronizar.');
+  }
 }
 
 /* ── Modal editável do card ── */
@@ -2551,19 +2601,42 @@ function salvarJornada(){
   document.getElementById('ovJor').classList.remove('open');
   popularFiltrosJornada();
   renderJornada();
+  avisoToast('Evento ' + jorId + ' atualizado com sucesso.', 'ok');
+  const emailLogadoJor = window.AetherPV && window.AetherPV.usuarioEmail;
+  if (emailLogadoJor && window.AetherPV) {
+    window.AetherPV.atualizarEvento(jorId, {
+      cluster: clusterV, concessao, equipamento,
+      inicio_ocorrencia: inicio, fim_ocorrencia: fim, minutos,
+      descritivo, pv_calculada: pvCalculada, pv_apurada: pvApurada,
+      coluna: JOR[jorId].col, contabilizacoes, liquidacoes, historico: JOR[jorId].historico
+    }, emailLogadoJor).then(ok => {
+      if (!ok) avisoNuvem('Evento salvo neste navegador, mas não sincronizado com a nuvem. Tente salvar novamente em instantes.');
+    });
+  } else {
+    avisoNuvem('Evento salvo neste navegador, mas não sincronizado com a nuvem. Entre pela página principal do AETHER (com sua conta Microsoft) para sincronizar.');
+  }
 }
 function excluirJornada(){
   if (!jorId) return;
   const e = jCustom.find(x => x.id === jorId && x._jornada); if (!e) return;
-  if (!confirm('Excluir definitivamente o evento '+jorId+'?')) return;
-  jCustom = jCustom.filter(x => x.id !== jorId);
-  delete JOR[jorId];
+  if (!confirm('Excluir o evento '+jorId+'? Ele some da tela, mas o registro fica guardado (com quem excluiu e quando).')) return;
+  const idExcluido = jorId;
+  const emailLogadoExc = window.AetherPV && window.AetherPV.usuarioEmail;
+  jCustom = jCustom.filter(x => x.id !== idExcluido);
+  delete JOR[idExcluido];
   localStorage.setItem(LS_JNEW, JSON.stringify(jCustom));
   Store.gravarJor(JOR);
   document.getElementById('ovJor').classList.remove('open');
   jorId = null;
   popularFiltrosJornada();
   renderJornada();
+  if (emailLogadoExc && window.AetherPV) {
+    window.AetherPV.excluirEvento(idExcluido, emailLogadoExc).then(ok => {
+      if (!ok) avisoNuvem('Evento removido desta tela, mas não sincronizado com a nuvem. Peça a alguém com login ativo para excluir de novo.');
+    });
+  } else {
+    avisoNuvem('Evento removido desta tela, mas não sincronizado com a nuvem. Entre pela página principal do AETHER (com sua conta Microsoft) para que a exclusão fique registrada.');
+  }
 }
 
 /* ═══════════ KANBAN ═══════════ */
@@ -3148,6 +3221,7 @@ function iniciarApp(){
   const jsv = document.getElementById('jorSalvar'); if (jsv) jsv.addEventListener('click', salvarJornada);
   const jex = document.getElementById('jorExcluir'); if (jex) jex.addEventListener('click', excluirJornada);
   const jnovo = document.getElementById('btnNovoJornada'); if (jnovo) jnovo.addEventListener('click', abrirNovoJornada);
+  const jexp = document.getElementById('btnExpJor'); if (jexp) jexp.addEventListener('click', exportarJornada);
   const jsalvarNovo = document.getElementById('btnSalvarNovoJor'); if (jsalvarNovo) jsalvarNovo.addEventListener('click', salvarNovoJornada);
   const jnc = document.getElementById('jNovoCluster'); if (jnc) jnc.addEventListener('change', ev => preencherConcessoesJornada('jNovoConc', ev.target.value, ''));
   const jec = document.getElementById('jorCluster'); if (jec) jec.addEventListener('change', ev => preencherConcessoesJornada('jorConc', ev.target.value, ''));
@@ -3281,9 +3355,30 @@ function iniciarApp(){
       renderTudo();
       renderQualidade();
     });
+    window.AetherPV.buscarEventosAtivos().then(eventos => {
+      eventos.forEach(row => {
+        const idx = jCustom.findIndex(x => x.id === row.evento_id);
+        const eventoObj = {
+          id: row.evento_id, projeto: row.concessao, concessao: row.concessao, cluster: row.cluster,
+          tipoFT: '', tipo: '', equipamento: row.equipamento, subestacao: '',
+          inicioOcorrencia: row.inicio_ocorrencia, fimOcorrencia: row.fim_ocorrencia,
+          dataOcorrencia: row.inicio_ocorrencia, desligamento: row.inicio_ocorrencia, normalizacao: row.fim_ocorrencia,
+          minutos: row.minutos, pvEstimada: row.pv_calculada, pvProg: 0, pvApuracao: 0, pvSatra: 0, pvSaat: 0,
+          descritivo: row.descritivo, descricao: row.descritivo, _manual: true, _jornada: true
+        };
+        if (idx >= 0) jCustom[idx] = eventoObj; else jCustom.push(eventoObj);
+        JOR[row.evento_id] = {
+          col: row.coluna, pv: row.pv_apurada, pvCalculada: row.pv_calculada, pvApurada: row.pv_apurada,
+          contabilizacoes: row.contabilizacoes || [], liquidacoes: row.liquidacoes || [],
+          ft: row.equipamento, historico: row.historico || []
+        };
+      });
+      popularFiltrosJornada();
+      renderJornada();
+    });
   }
 }
 </script>
-<!-- Gerado em 20/07/2026 16:39 · gerar_gestaopv.py · AETHER HRZ -->
+<!-- Gerado em 20/07/2026 17:20 · gerar_gestaopv.py · AETHER HRZ -->
 </body>
 </html>
