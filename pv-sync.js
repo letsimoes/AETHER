@@ -53,7 +53,7 @@
               religDesempenho: row.relig_desempenho,
               religEficacia: row.relig_eficacia,
               validado: row.validado,
-              por: row.validado_por,
+              por: row.por,
               em: row.validado_em
             };
           });
@@ -65,7 +65,7 @@
       });
     },
 
-    salvar: function (eventoId, dados, quem) {
+    salvar: function (eventoId, dados, email, nome) {
       return prontoPromise.then(function (client) {
         if (!client) return false;
         return client.from('pv_classificacoes_log').insert({
@@ -81,7 +81,8 @@
           relig_desempenho: dados.religDesempenho,
           relig_eficacia: dados.religEficacia,
           validado: true,
-          validado_por: quem,
+          validado_por_email: email,
+          validado_por_nome: nome,
           validado_em: new Date().toISOString()
         }).then(function (resp) {
           if (resp.error) throw resp.error;
