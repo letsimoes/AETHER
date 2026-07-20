@@ -1638,10 +1638,10 @@ async function salvarClassificacao(){
   Store.gravar(CLS);
   document.getElementById('ovDoss').classList.remove('open');
   renderQualidade();
+  avisoToast('Evento ' + dossId + ' reclassificado com sucesso.', 'ok');
   if (emailLogado && window.AetherPV) {
     window.AetherPV.salvar(dossId, dados, emailLogado, quem).then(ok => {
-      if (ok) avisoToast('Evento ' + dossId + ' reclassificado com sucesso. Atualizado por: ' + quem, 'ok');
-      else avisoNuvem('Classificação salva neste navegador, mas não sincronizada com a nuvem. Tente salvar novamente em instantes.');
+      if (!ok) avisoNuvem('Não foi possível sincronizar com a nuvem. Tente salvar novamente em instantes.');
     });
   } else {
     avisoNuvem('Classificação salva neste navegador, mas não sincronizada com a nuvem. Entre pela página principal do AETHER (com sua conta Microsoft) para sincronizar.');
@@ -3276,6 +3276,6 @@ function iniciarApp(){
   }
 }
 </script>
-<!-- Gerado em 20/07/2026 16:30 · gerar_gestaopv.py · AETHER HRZ -->
+<!-- Gerado em 20/07/2026 16:33 · gerar_gestaopv.py · AETHER HRZ -->
 </body>
 </html>
