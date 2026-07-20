@@ -51,7 +51,10 @@
     document.getElementById('btnEntrarMs').addEventListener('click', function () {
       supabaseClient.auth.signInWithOAuth({
         provider: 'azure',
-        options: { redirectTo: window.location.origin + window.location.pathname }
+        options: {
+          redirectTo: window.location.origin + window.location.pathname,
+          scopes: 'email openid profile'
+        }
       });
     });
   }
