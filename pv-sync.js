@@ -92,6 +92,94 @@
         console.warn('AetherPV: falha ao salvar classificação no Supabase', err);
         return false;
       });
+    },
+
+    buscarEventosAtivos: function () {
+      return prontoPromise.then(function (client) {
+        if (!client) return [];
+        return client.from('pv_eventos_jornada').select('*').eq('excluido', false).then(function (resp) {
+          return resp.data || [];
+        });
+      }).catch(function (err) {
+        console.warn('AetherPV: falha ao buscar eventos do Supabase', err);
+        return [];
+      });
+    },
+
+    criarEvento: function (dados, quem) {
+      return prontoPromise.then(function (client) {
+        if (!client) return false;
+        return client.from('pv_eventos_jornada').insert({
+          evento_id: dados.evento_id,
+          cluster: dados.cluster,
+          concessao: dados.concessao,
+          equipamento: dados.equipamento,
+          inicio_ocorrencia: dados.inicio_ocorrencia,
+          fim_ocorrencia: dados.fim_ocorrencia,
+          minutos: dados.minutos,
+          descritivo: dados.descritivo,
+          pv_calculada: dados.pv_calculada,
+          pv_apurada: dados.pv_apurada,
+          coluna: dados.coluna,
+          contabilizacoes: dados.contabilizacoes,
+          liquidacoes: dados.liquidacoes,
+          historico: dados.historico,
+          criado_por: quem,
+          atualizado_por: quem
+        }).then(function (resp) {
+          if (resp.error) throw resp.error;
+          return true;
+        });
+      }).catch(function (err) {
+        console.warn('AetherPV: falha ao criar evento no Supabase', err);
+        return false;
+      });
+    },
+
+    atualizarEvento: function (eventoId, dados, quem) {
+      return prontoPromise.then(function (client) {
+        if (!client) return false;
+        return client.from('pv_eventos_jornada').update({
+          cluster: dados.cluster,
+          concessao: dados.concessao,
+          equipamento: dados.equipamento,
+          inicio_ocorrencia: dados.inicio_ocorrencia,
+          fim_ocorrencia: dados.fim_ocorrencia,
+          minutos: dados.minutos,
+          descritivo: dados.descritivo,
+          pv_calculada: dados.pv_calculada,
+          pv_apurada: dados.pv_apurada,
+          coluna: dados.coluna,
+          contabilizacoes: dados.contabilizacoes,
+          liquidacoes: dados.liquidacoes,
+          historico: dados.historico,
+          atualizado_por: quem,
+          atualizado_em: new Date().toISOString()
+        }).eq('evento_id', eventoId).then(function (resp) {
+          if (resp.error) throw resp.error;
+          return true;
+        });
+      }).catch(function (err) {
+        console.warn('AetherPV: falha ao atualizar evento no Supabase', err);
+        return false;
+      });
+    },
+
+    excluirEvento: function (eventoId, quem) {
+      return prontoPromise.then(function (client) {
+        if (!client) return false;
+        return client.from('pv_eventos_jornada').update({
+          excluido: true,
+          excluido_por: quem,
+          excluido_em: new Date().toISOString()
+        }).eq('evento_id', eventoId).then(function (resp) {
+          if (resp.error) throw resp.error;
+          return true;
+        });
+      }).catch(function (err) {
+        console.warn('AetherPV: falha ao excluir evento no Supabase', err);
+        return false;
+      });
     }
   };
 })();
