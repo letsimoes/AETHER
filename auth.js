@@ -81,6 +81,8 @@
       } else {
         mostrarTelaLogin(supabaseClient, erroUrl);
       }
+    }).catch(function (err) {
+      mostrarTelaLogin(supabaseClient, (err && err.message) || 'falha ao verificar sessão');
     });
 
     supabaseClient.auth.onAuthStateChange(function (event, session) {
