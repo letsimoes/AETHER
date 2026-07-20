@@ -1651,11 +1651,12 @@ async function salvarClassificacao(){
 function exportarCls(){
   const COLS = [
     'Evento','Concessão','Cluster','Tipo de FT','Subestação','Equipamento','Tipo do evento',
-    'Data da ocorrência','Desligamento efetivo','Normalização efetiva','Minutos','Nº RDF','Nº SI','Descrição',
+    'Data da ocorrência','Desligamento efetivo','Normalização efetiva','Minutos','Nº RDF','Nº SI',
+    'Atendimento a terceiros','PV Programado','PV Apuração','PV SATRA','PV SAAT','Data SAAT','Descrição',
     'Componentes (Tipo de FT)','Tipo de Desligamento','Origem','Causa Primária','Tipo de Falta',
     'Tipo de Restabelecimento','Proteção: Tipos de Proteção','Proteção:Tipos de Atuação',
     'Religamento Automático: Desempenho','Religamento Automático: Eficácia',
-    'Status da classificação','Fonte','Reclassificado por','Data da reclassificação'
+    'Status da classificação','Reclassificado por','Data da reclassificação'
   ];
   const cel = v => {
     const s = String(v === null || v === undefined ? '' : v).replace(/"/g,'""').replace(/[\r\n]+/g,' ');
@@ -1666,11 +1667,11 @@ function exportarCls(){
     return [
       e.id, concRev(e), cluster(e), e.tipoFT, e.subestacao, e.equipamento, e.tipo,
       fmtData(e.dataOcorrencia), fmtDataHora(e.desligamento), fmtDataHora(e.normalizacao),
-      e.minutos || 0, e.rdf, e.si, e.descricao,
+      e.minutos || 0, e.rdf, e.si,
+      e.terceiros, e.pvProg || 0, e.pvApuracao || 0, e.pvSatra || 0, e.pvSaat || 0, fmtData(e.dataSaat), e.descricao,
       c.equip, c.tipoDesligamento, c.origem, c.causa, c.falta, c.tipoRestabelecimento,
       c.tipoProtecao, c.tipoAtuacao, c.religDesempenho, c.religEficacia,
       c.pendente ? PENDENTE_CYMI : 'Classificado',
-      c.validado ? 'Reclassificação local' : 'Base PV Consolidada',
       c.por, c.em ? fmtDataHora(c.em) : ''
     ].map(cel).join(';');
   });
@@ -3275,6 +3276,6 @@ function iniciarApp(){
   }
 }
 </script>
-<!-- Gerado em 20/07/2026 16:24 · gerar_gestaopv.py · AETHER HRZ -->
+<!-- Gerado em 20/07/2026 16:30 · gerar_gestaopv.py · AETHER HRZ -->
 </body>
 </html>
