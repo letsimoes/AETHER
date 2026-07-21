@@ -2060,7 +2060,7 @@ function moverJornada(id, col){
     pedirMesEtapa(id, col);   // pergunta o mês, depois aplica
   }
 }
-function aplicarMoverJornada(id, col, mesAAAAMM, valorLancamento=null){
+async function aplicarMoverJornada(id, col, mesAAAAMM, valorLancamento=null){
   const atual = JOR[id] || {col:'calculada'};
   const etapas = Object.assign({}, atual.etapas || {});
   const prox = Object.assign({}, atual);
@@ -2086,7 +2086,7 @@ function aplicarMoverJornada(id, col, mesAAAAMM, valorLancamento=null){
   renderJornada();
   renderDispGrid();
   const eJor = jCustom.find(x => x.id === id && x._jornada);
-  const emailLogadoMov = window.AetherPV && window.AetherPV.usuarioEmail;
+  const emailLogadoMov = window.AetherPV ? await window.AetherPV.usuarioAtual() : null;
   if (eJor && emailLogadoMov && window.AetherPV) {
     window.AetherPV.atualizarEvento(id, {
       cluster: eJor.cluster, concessao: eJor.concessao, equipamento: eJor.equipamento,
@@ -2497,7 +2497,7 @@ function abrirNovoJornada(){
   document.getElementById('jNovoInicio').value = localDateTimeValue();
   document.getElementById('ovNovoJor').classList.add('open');
 }
-function salvarNovoJornada(){
+async function salvarNovoJornada(){
   const clusterV = document.getElementById('jNovoCluster').value;
   const concessao = document.getElementById('jNovoConc').value;
   const subestacao = '';
@@ -2528,7 +2528,7 @@ function salvarNovoJornada(){
   popularFiltrosJornada();
   renderJornada();
   avisoToast('Evento ' + id + ' criado com sucesso.', 'ok');
-  const emailLogado = window.AetherPV && window.AetherPV.usuarioEmail;
+  const emailLogado = window.AetherPV ? await window.AetherPV.usuarioAtual() : null;
   if (emailLogado && window.AetherPV) {
     window.AetherPV.criarEvento({
       evento_id: id, cluster: clusterV, concessao, equipamento,
@@ -2577,7 +2577,7 @@ function abrirJornada(id){
   document.getElementById('jorHist').innerHTML = historicoHTML(reg);
   document.getElementById('ovJor').classList.add('open');
 }
-function salvarJornada(){
+async function salvarJornada(){
   if (!jorId) return;
   const e = jCustom.find(x => x.id === jorId && x._jornada); if (!e) return;
   const clusterV = document.getElementById('jorCluster').value;
@@ -2616,7 +2616,7 @@ function salvarJornada(){
   popularFiltrosJornada();
   renderJornada();
   avisoToast('Evento ' + jorId + ' atualizado com sucesso.', 'ok');
-  const emailLogadoJor = window.AetherPV && window.AetherPV.usuarioEmail;
+  const emailLogadoJor = window.AetherPV ? await window.AetherPV.usuarioAtual() : null;
   if (emailLogadoJor && window.AetherPV) {
     window.AetherPV.atualizarEvento(jorId, {
       cluster: clusterV, concessao, equipamento,
@@ -2630,12 +2630,12 @@ function salvarJornada(){
     avisoNuvem('Evento salvo neste navegador, mas não sincronizado com a nuvem. Entre pela página principal do AETHER (com sua conta Microsoft) para sincronizar.');
   }
 }
-function excluirJornada(){
+async function excluirJornada(){
   if (!jorId) return;
   const e = jCustom.find(x => x.id === jorId && x._jornada); if (!e) return;
   if (!confirm('Excluir o evento '+jorId+'? Ele some da tela, mas o registro fica guardado (com quem excluiu e quando).')) return;
   const idExcluido = jorId;
-  const emailLogadoExc = window.AetherPV && window.AetherPV.usuarioEmail;
+  const emailLogadoExc = window.AetherPV ? await window.AetherPV.usuarioAtual() : null;
   jCustom = jCustom.filter(x => x.id !== idExcluido);
   delete JOR[idExcluido];
   localStorage.setItem(LS_JNEW, JSON.stringify(jCustom));
@@ -3394,6 +3394,6 @@ function iniciarApp(){
   }
 }
 </script>
-<!-- Gerado em 20/07/2026 17:28 · gerar_gestaopv.py · AETHER HRZ -->
+<!-- Gerado em 21/07/2026 09:51 · gerar_gestaopv.py · AETHER HRZ -->
 </body>
 </html>
