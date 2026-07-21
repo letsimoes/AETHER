@@ -86,6 +86,7 @@
             document.querySelectorAll('.item').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             document.getElementById('main').innerHTML = '<iframe src="' + url + '" style="flex:1;border:none;width:100%;height:100%;"></iframe>';
+            localStorage.setItem('aether_ultima_aba_geracao', url);
         }
         function loadDev(btn) {
             document.querySelectorAll('.item').forEach(b => b.classList.remove('active'));
@@ -96,7 +97,15 @@
             document.getElementById('sidebar').classList.toggle('open');
             document.getElementById('overlay').classList.toggle('open');
         }
-        window.onload = function() { load('index_bess.html', document.querySelector('.item.active')); }
+        window.onload = function() {
+            var ultima = localStorage.getItem('aether_ultima_aba_geracao') || 'index_bess.html';
+            var alvo = null;
+            document.querySelectorAll('.item').forEach(function(b) {
+                var onc = b.getAttribute('onclick') || '';
+                if (onc.indexOf("'" + ultima + "'") !== -1) alvo = b;
+            });
+            load(ultima, alvo || document.querySelector('.item.active'));
+        }
     </script>
 </body>
 </html>
