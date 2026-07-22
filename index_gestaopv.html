@@ -2100,7 +2100,7 @@ async function aplicarMoverJornada(id, col, mesAAAAMM, valorLancamento=null){
       cluster: eJor.cluster, concessao: eJor.concessao, equipamento: eJor.equipamento,
       inicio_ocorrencia: eJor.inicioOcorrencia, fim_ocorrencia: eJor.fimOcorrencia, minutos: eJor.minutos,
       descritivo: eJor.descritivo, pv_calculada: prox.pvCalculada, pv_apurada: prox.pvApurada,
-      coluna: col, contabilizacoes: prox.contabilizacoes, liquidacoes: prox.liquidacoes, historico: prox.historico
+      coluna: col, contabilizacoes: prox.contabilizacoes, liquidacoes: prox.liquidacoes, historico: prox.historico, etapas: prox.etapas
     }, emailLogadoMov).then(ok => {
       if (!ok) avisoNuvem('Etapa alterada neste navegador, mas não sincronizada com a nuvem.');
     });
@@ -2577,7 +2577,7 @@ async function salvarNovoJornada(){
       evento_id: id, cluster: clusterV, concessao, equipamento,
       inicio_ocorrencia: inicio, fim_ocorrencia: fim, minutos,
       descritivo, pv_calculada: pv, pv_apurada: pv,
-      coluna: 'calculada', contabilizacoes: [], liquidacoes: [], historico: JOR[id].historico
+      coluna: 'calculada', contabilizacoes: [], liquidacoes: [], historico: JOR[id].historico, etapas: {}
     }, emailLogado).then(ok => {
       if (!ok) avisoNuvem('Evento salvo neste navegador, mas não sincronizado com a nuvem. Tente salvar novamente em instantes.');
     });
@@ -2658,6 +2658,7 @@ async function salvarJornada(){
   document.getElementById('ovJor').classList.remove('open');
   popularFiltrosJornada();
   renderJornada();
+  renderDispGrid();
   avisoToast('Evento ' + jorId + ' atualizado com sucesso.', 'ok');
   const emailLogadoJor = window.AetherPV ? await window.AetherPV.usuarioAtual() : null;
   if (emailLogadoJor && window.AetherPV) {
@@ -2665,7 +2666,7 @@ async function salvarJornada(){
       cluster: clusterV, concessao, equipamento,
       inicio_ocorrencia: inicio, fim_ocorrencia: fim, minutos,
       descritivo, pv_calculada: pvCalculada, pv_apurada: pvApurada,
-      coluna: JOR[jorId].col, contabilizacoes, liquidacoes, historico: JOR[jorId].historico
+      coluna: JOR[jorId].col, contabilizacoes, liquidacoes, historico: JOR[jorId].historico, etapas: JOR[jorId].etapas || {}
     }, emailLogadoJor).then(ok => {
       if (!ok) avisoNuvem('Evento salvo neste navegador, mas não sincronizado com a nuvem. Tente salvar novamente em instantes.');
     });
@@ -3432,7 +3433,7 @@ function iniciarApp(){
         JOR[row.evento_id] = {
           col: row.coluna, pv: row.pv_apurada, pvCalculada: row.pv_calculada, pvApurada: row.pv_apurada,
           contabilizacoes: row.contabilizacoes || [], liquidacoes: row.liquidacoes || [],
-          ft: row.equipamento, historico: row.historico || []
+          ft: row.equipamento, historico: row.historico || [], etapas: row.etapas || {}
         };
       });
       popularFiltrosJornada();
@@ -3442,6 +3443,6 @@ function iniciarApp(){
   }
 }
 </script>
-<!-- Gerado em 22/07/2026 10:03 · gerar_gestaopv.py · AETHER HRZ -->
+<!-- Gerado em 22/07/2026 11:24 · gerar_gestaopv.py · AETHER HRZ -->
 </body>
 </html>
