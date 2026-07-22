@@ -129,7 +129,10 @@
           historico: dados.historico,
           etapas: dados.etapas,
           criado_por: quem,
-          atualizado_por: quem
+          atualizado_por: quem,
+          excluido: false,
+          excluido_por: null,
+          excluido_em: null
         }, { onConflict: 'evento_id' }).then(function (resp) {
           if (resp.error) throw resp.error;
           return true;
