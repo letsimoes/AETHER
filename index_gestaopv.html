@@ -1147,10 +1147,8 @@ function baseExecutivaSaat(){
   return SAAT.filter(s => {
     if (!(s.descMes > 0)) return false;
     if (!s.mesAp || !execAno) return false;
-    // Competência por EFEITO NA RECEITA: o desconto sai no mês da apuração + 1.
-    // Ex.: apuração dez/2025 → desconto efetivo jan/2026.
-    const efet = mesMais(s.mesAp, 1);            // 'AAAA-MM' já deslocado
-    const [ano, mes] = efet.split('-').map(Number);
+    // Competência: o desconto conta no próprio mês da apuração (sem deslocar pro mês seguinte).
+    const [ano, mes] = s.mesAp.split('-').map(Number);
     if (ano !== Number(execAno)) return false;
     if (mes > Number(execMesAte || 12)) return false;
     const conc = concessaoSaat(s);
@@ -3443,6 +3441,6 @@ function iniciarApp(){
   }
 }
 </script>
-<!-- Gerado em 22/07/2026 11:24 · gerar_gestaopv.py · AETHER HRZ -->
+<!-- Gerado em 22/07/2026 13:54 · gerar_gestaopv.py · AETHER HRZ -->
 </body>
 </html>
