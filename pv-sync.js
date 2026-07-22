@@ -109,7 +109,7 @@
     criarEvento: function (dados, quem) {
       return prontoPromise.then(function (client) {
         if (!client) return false;
-        return client.from('pv_eventos_jornada').insert({
+        return client.from('pv_eventos_jornada').upsert({
           evento_id: dados.evento_id,
           cluster: dados.cluster,
           concessao: dados.concessao,
@@ -126,7 +126,7 @@
           historico: dados.historico,
           criado_por: quem,
           atualizado_por: quem
-        }).then(function (resp) {
+        }, { onConflict: 'evento_id' }).then(function (resp) {
           if (resp.error) throw resp.error;
           return true;
         });
