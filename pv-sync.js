@@ -98,7 +98,10 @@
       return prontoPromise.then(function (client) {
         if (!client) return [];
         return client.from('pv_eventos_jornada').select('*').eq('excluido', false).then(function (resp) {
-          return resp.data || [];
+          return (resp.data || []).map(function (row) {
+            row.etapas = row.etapas || {};
+            return row;
+          });
         });
       }).catch(function (err) {
         console.warn('AetherPV: falha ao buscar eventos do Supabase', err);
@@ -124,6 +127,7 @@
           contabilizacoes: dados.contabilizacoes,
           liquidacoes: dados.liquidacoes,
           historico: dados.historico,
+          etapas: dados.etapas,
           criado_por: quem,
           atualizado_por: quem
         }, { onConflict: 'evento_id' }).then(function (resp) {
@@ -153,6 +157,7 @@
           contabilizacoes: dados.contabilizacoes,
           liquidacoes: dados.liquidacoes,
           historico: dados.historico,
+          etapas: dados.etapas,
           atualizado_por: quem,
           atualizado_em: new Date().toISOString()
         }).eq('evento_id', eventoId).then(function (resp) {
