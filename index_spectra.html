@@ -99,10 +99,6 @@ h1{font-size:22px;font-weight:600;}
 <body>
 
 <div class="main">
-<div style="display:flex;gap:8px;margin-bottom:24px;border-bottom:2px solid var(--border);padding-bottom:0;">
-  <button class="tab-bar-btn" onclick="showPage('indicadores',this)" style="padding:8px 18px;border:none;background:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--accent);border-bottom:2px solid var(--accent);margin-bottom:-2px;border-radius:6px 6px 0 0;" id="tab-ind" data-pt="📊 Indicadores" data-en="📊 Indicators">📊 Indicadores</button>
-  <button class="tab-bar-btn" onclick="showPage('diagnostico',this)" style="padding:8px 18px;border:none;background:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text2);border-bottom:2px solid transparent;margin-bottom:-2px;border-radius:6px 6px 0 0;" id="tab-diag" data-pt="🔬 Diagnóstico" data-en="🔬 Diagnosis">🔬 Diagnóstico</button>
-</div>
 
 <!-- ══ INDICADORES ══ -->
 <div class="page active" id="page-indicadores">
@@ -116,8 +112,12 @@ h1{font-size:22px;font-weight:600;}
               <button id="langBtn" onclick="toggleLang()" style="font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;border:2px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;">🌐 EN</button>
       </div>
       <div class="updated" data-pt="Referência: CIGRé TB 771" data-en="Reference: CIGRé TB 771">Referência: CIGRé TB 771</div>
-      <div class="updated" data-pt="Atualizado em 23/07/2026 09:55" data-en="Updated on 23/07/2026 09:55">Atualizado em 23/07/2026 09:55</div>
+      <div class="updated" data-pt="Atualizado em 23/07/2026 11:38" data-en="Updated on 23/07/2026 11:38">Atualizado em 23/07/2026 11:38</div>
     </div>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:24px;border-bottom:2px solid var(--border);padding-bottom:0;">
+    <button class="tab-bar-btn" onclick="showPage('indicadores',this)" style="padding:8px 18px;border:none;background:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--accent);border-bottom:2px solid var(--accent);margin-bottom:-2px;border-radius:6px 6px 0 0;" id="tab-ind" data-pt="📊 Indicadores" data-en="📊 Indicators">📊 Indicadores</button>
+    <button class="tab-bar-btn" onclick="showPage('diagnostico',this)" style="padding:8px 18px;border:none;background:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text2);border-bottom:2px solid transparent;margin-bottom:-2px;border-radius:6px 6px 0 0;" id="tab-diag" data-pt="🔬 Diagnóstico" data-en="🔬 Diagnosis">🔬 Diagnóstico</button>
   </div>
   <!-- KPIs dinâmicos da seleção -->
   <div id="indicatorKpiContext" style="font-size:11px;font-weight:600;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin:0 0 8px 2px;"></div>
@@ -189,6 +189,10 @@ h1{font-size:22px;font-weight:600;}
       <h1 data-pt="Diagnóstico Integrado" data-en="Integrated Diagnosis">Diagnóstico Integrado</h1>
     </div>
     <div class="updated" data-pt="CIGRé TB 771 · Diagnóstico baseado na amostra de 26/06/2026" data-en="CIGRé TB 771 · Diagnosis based on sample of 26/06/2026">CIGRé TB 771 · Diagnóstico baseado na amostra de 26/06/2026</div>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:24px;border-bottom:2px solid var(--border);padding-bottom:0;">
+    <button class="tab-bar-btn" onclick="showPage('indicadores',this)" style="padding:8px 18px;border:none;background:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text2);border-bottom:2px solid transparent;margin-bottom:-2px;border-radius:6px 6px 0 0;" id="tab-ind-2" data-pt="📊 Indicadores" data-en="📊 Indicators">📊 Indicadores</button>
+    <button class="tab-bar-btn" onclick="showPage('diagnostico',this)" style="padding:8px 18px;border:none;background:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--accent);border-bottom:2px solid var(--accent);margin-bottom:-2px;border-radius:6px 6px 0 0;" id="tab-diag-2" data-pt="🔬 Diagnóstico" data-en="🔬 Diagnosis">🔬 Diagnóstico</button>
   </div>
 
   <!-- KPIs frota -->
