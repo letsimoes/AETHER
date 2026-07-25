@@ -82,6 +82,12 @@ h1{font-size:22px;font-weight:600;}
   .main{margin-left:0;padding:16px;}
   .metrics{grid-template-columns:repeat(2,1fr);}
   .grid2{grid-template-columns:1fr;}
+  #tabAlertGrid{grid-template-columns:1fr !important;}
+  #cepZones{grid-template-columns:repeat(2,1fr) !important;}
+  #healthLegend{min-width:0 !important;width:100% !important;}
+  .hl-wrap{min-width:0 !important;}
+  #indicatorKpis{grid-template-columns:repeat(2,1fr) !important;}
+  #co2coGrid{grid-template-columns:1fr !important;}
 }
 </style>
 <script>
@@ -116,7 +122,7 @@ h1{font-size:22px;font-weight:600;}
               <button id="langBtn" onclick="toggleLang()" style="font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;border:2px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;">🌐 EN</button>
       </div>
       <div class="updated" data-pt="Referência: CIGRé TB 771" data-en="Reference: CIGRé TB 771">Referência: CIGRé TB 771</div>
-      <div class="updated" data-pt="Atualizado em 23/07/2026 18:01" data-en="Updated on 23/07/2026 18:01">Atualizado em 23/07/2026 18:01</div>
+      <div class="updated" data-pt="Atualizado em 25/07/2026 16:54" data-en="Updated on 25/07/2026 16:54">Atualizado em 25/07/2026 16:54</div>
     </div>
   </div>
   <!-- KPIs dinâmicos da seleção -->
@@ -143,7 +149,7 @@ h1{font-size:22px;font-weight:600;}
   </div>
 
   <!-- Tabela + Alertas -->
-  <div style="display:grid;grid-template-columns:1fr 280px;gap:16px;margin-bottom:16px;align-items:start;">
+  <div id="tabAlertGrid" style="display:grid;grid-template-columns:1fr 280px;gap:16px;margin-bottom:16px;align-items:start;">
     <div class="card" style="margin-bottom:0;">
       <div class="card-title" id="tabelaTitulo" data-pt="Todos os Reatores" data-en="All Reactors">Todos os Reatores</div>
       <div style="overflow-x:auto;">
@@ -251,7 +257,7 @@ h1{font-size:22px;font-weight:600;}
         <div class="card-title" style="margin-bottom:8px;" data-pt="Como ler a condição dos reatores" data-en="How to read reactor condition">Como ler a condição dos reatores</div>
         <p style="font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:10px;" data-pt="A condição executiva usa quatro níveis. Intermediário 2 e faixa elevada são agrupados em Em observação. A faixa técnica CIGRÉ que originou o status permanece visível no detalhe de cada reator." data-en="The executive condition uses four levels. Intermediate 2 and the elevated band are grouped as Under observation. The technical CIGRÉ band remains visible in each reactor detail.">A condição executiva usa quatro níveis. Intermediário 2 e faixa elevada são agrupados em Em observação. A faixa técnica CIGRÉ que originou o status permanece visível no detalhe de cada reator.</p>
       </div>
-      <div style="flex:1.8;min-width:650px;"><div id="healthLegend" style="display:grid;grid-template-columns:repeat(4,minmax(135px,1fr));gap:8px;"></div></div>
+      <div class="hl-wrap" style="flex:1.8;min-width:650px;"><div id="healthLegend" style="display:grid;grid-template-columns:repeat(4,minmax(135px,1fr));gap:8px;"></div></div>
     </div>
   </div>
 
@@ -1003,7 +1009,7 @@ function drawDuval1() {
     c.parentElement.style.position = 'relative';
     c.parentElement.appendChild(tip);
 
-    c.addEventListener('mousemove', e => {
+    const onPointerMoveD1 = e => {
       const rect = c.getBoundingClientRect();
       const mx = (e.clientX - rect.left) * c.width / rect.width;
       const my = (e.clientY - rect.top) * c.height / rect.height;
@@ -1044,7 +1050,11 @@ function drawDuval1() {
         tip.style.display = 'none';
         c.style.cursor = 'default';
       }
-    });
+    };
+    c.addEventListener('mousemove', onPointerMoveD1);
+    c.addEventListener('touchstart', e => {
+      if (e.touches && e.touches[0]) { onPointerMoveD1({clientX: e.touches[0].clientX, clientY: e.touches[0].clientY}); }
+    }, {passive:true});
 
     c.addEventListener('mouseleave', () => tip.style.display = 'none');
   }
@@ -1231,7 +1241,7 @@ function drawDuval() {
     c.parentElement.style.position = 'relative';
     c.parentElement.appendChild(tip);
 
-    c.addEventListener('mousemove', e => {
+    const onPointerMoveD5 = e => {
       const rect = c.getBoundingClientRect();
       const mx = (e.clientX - rect.left) * c.width / rect.width;
       const my = (e.clientY - rect.top) * c.height / rect.height;
@@ -1272,7 +1282,11 @@ function drawDuval() {
         tip.style.display = 'none';
         c.style.cursor = 'default';
       }
-    });
+    };
+    c.addEventListener('mousemove', onPointerMoveD5);
+    c.addEventListener('touchstart', e => {
+      if (e.touches && e.touches[0]) { onPointerMoveD5({clientX: e.touches[0].clientX, clientY: e.touches[0].clientY}); }
+    }, {passive:true});
 
     c.addEventListener('mouseleave', () => tip.style.display = 'none');
   }
