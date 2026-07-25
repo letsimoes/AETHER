@@ -50,8 +50,10 @@ h1{font-size:22px;font-weight:600;}
   .main{padding:16px;}
   h1{font-size:16px;}
   .page-header{flex-direction:column;gap:8px;}
+  .bess-team-grid{grid-template-columns:repeat(2,1fr) !important;}
 }
 @media(max-width:500px){.metrics{grid-template-columns:1fr;}}
+.bess-org-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
 </style>
 <script>
 (function(){
@@ -74,7 +76,7 @@ h1{font-size:22px;font-weight:600;}
     </div>
     <div style="text-align:right;">
       <button id="langBtn" onclick="toggleLang()" style="font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;border:2px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;transition:all .2s;">🌐 EN</button>
-      <div class="updated" data-pt="Atualizado em 29/06/2026 11:14" data-en="Updated on 29/06/2026 11:14">Atualizado em 29/06/2026 11:14</div>
+      <div class="updated" data-pt="Atualizado em 25/07/2026 16:54" data-en="Updated on 25/07/2026 16:54">Atualizado em 25/07/2026 16:54</div>
     </div>
   </div>
 
@@ -164,7 +166,8 @@ h1{font-size:22px;font-weight:600;}
   <!-- GOVERNANÇA -->
   <div class="card">
     <div class="card-title" data-pt="Governança do projeto — Stage 1" data-en="Project governance — Stage 1">Governança do projeto — Stage 1</div>
-    <div style="display:flex;flex-direction:column;align-items:center;gap:0;padding:0 20px;">
+    <div class="bess-org-scroll">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:0;padding:0 20px;min-width:460px;">
 
       <!-- BOARD (Topo) -->
       <div style="position:relative;width:100%;display:flex;justify-content:center;margin-bottom:0;">
@@ -209,9 +212,11 @@ h1{font-size:22px;font-weight:600;}
         <!-- Drops para cada membro -->
         <div style="position:absolute;width:2px;height:20px;background:#A67C2E;top:2px;left:0.0%;transform:translateX(-50%);"></div><div style="position:absolute;width:2px;height:20px;background:#A67C2E;top:2px;left:25.0%;transform:translateX(-50%);"></div><div style="position:absolute;width:2px;height:20px;background:#A67C2E;top:2px;left:50.0%;transform:translateX(-50%);"></div><div style="position:absolute;width:2px;height:20px;background:#A67C2E;top:2px;left:75.0%;transform:translateX(-50%);"></div><div style="position:absolute;width:2px;height:20px;background:#A67C2E;top:2px;left:100.0%;transform:translateX(-50%);"></div>
       </div>
+    </div>
+    </div>
 
       <!-- TEAM GRID (5 colunas) -->
-      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;width:100%;margin-top:8px;padding:0 2px;">
+      <div class="bess-team-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;width:100%;margin-top:8px;padding:0 2px;">
         <div style="background:#E8EFF8;border-radius:8px;padding:10px;border:0.5px solid #1B3A6B33;">
           <div style="font-size:10px;font-weight:600;color:#1B3A6B;" data-pt="PMO" data-en="PMO">PMO</div>
           <div style="font-size:10px;color:#4A7FBF;margin-top:2px;">Leticia Simoes</div>
@@ -235,7 +240,6 @@ h1{font-size:22px;font-weight:600;}
         </div>
       </div>
 
-    </div>
   </div>
 
   <!-- REFERÊNCIAS TÉCNICAS -->
