@@ -98,29 +98,30 @@ tr.tot td{font-weight:700;background:var(--azul2);color:#fff;border:none}
 
   <div class="kpis" id="kpis"></div>
 
-  <div class="card">
-    <h2 data-i18n="Visão geral">Visão geral</h2>
-    <table>
-      <thead><tr>
-        <th data-i18n="KPI">KPI</th>
-        <th id="thPeriodoGeral">Período</th>
-        <th data-i18n="YTD">YTD</th>
-      </tr></thead>
-      <tbody id="tbodyGeral"></tbody>
-    </table>
-  </div>
+  <div class="cols2b">
+    <div class="card">
+      <h2 data-i18n="Visão geral">Visão geral</h2>
+      <table>
+        <thead><tr>
+          <th data-i18n="KPI">KPI</th>
+          <th id="thPeriodoGeral">Período</th>
+          <th id="thYtdGeral">YTD</th>
+        </tr></thead>
+        <tbody id="tbodyGeral"></tbody>
+      </table>
+    </div>
 
-  <div class="card">
-    <h2 data-i18n="Detalhamento por razão">Detalhamento por razão</h2>
-    <table>
-      <thead><tr>
-        <th data-i18n="Razão">Razão</th>
-        <th id="thPeriodoRazao">Período (GWh)</th>
-        <th data-i18n="YTD (GWh)">YTD (GWh)</th>
-        <th data-i18n="Horas YTD">Horas YTD</th>
-      </tr></thead>
-      <tbody id="tbodyRazao"></tbody>
-    </table>
+    <div class="card">
+      <h2 data-i18n="Detalhamento por razão">Detalhamento por razão</h2>
+      <table>
+        <thead><tr>
+          <th data-i18n="Razão">Razão</th>
+          <th id="thPeriodoRazao">Período (GWh)</th>
+          <th id="thYtdRazao">YTD (GWh)</th>
+        </tr></thead>
+        <tbody id="tbodyRazao"></tbody>
+      </table>
+    </div>
   </div>
 
   <div class="legcap" id="legcap"></div>
@@ -168,8 +169,8 @@ tr.tot td{font-weight:700;background:var(--azul2);color:#fff;border:none}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-const D = {"anual": {"2021": {"total": 13.82, "cnf": 1.99, "ene": 2.62, "rel": 9.21, "horas": 14.7, "horasCnf": 2.4, "horasEne": 10.8, "horasRel": 1.5, "franquiaRel": 78.0, "naoRess": 9.21, "ress": 0.0, "ppa": 0.0, "reembolsavel": 0.0, "impacto": 0.0}, "2022": {"total": 1574.12, "cnf": 751.47, "ene": 14.12, "rel": 808.53, "horas": 139.1, "horasCnf": 83.0, "horasEne": 15.1, "horasRel": 41.0, "franquiaRel": 59.0, "naoRess": 808.53, "ress": 0.0, "ppa": 269.62, "reembolsavel": 0.0, "impacto": 424415.45}, "2023": {"total": 2959.28, "cnf": 1864.98, "ene": 698.65, "rel": 395.65, "horas": 516.2, "horasCnf": 108.0, "horasEne": 335.9, "horasRel": 72.3, "franquiaRel": 61.0, "naoRess": 290.94, "ress": 104.7, "ppa": 287.06, "reembolsavel": 30056.33, "impacto": 849491.2}, "2024": {"total": 17558.3, "cnf": 4952.97, "ene": 7737.34, "rel": 4867.99, "horas": 1575.2, "horasCnf": 740.1, "horasEne": 643.8, "horasRel": 191.4, "franquiaRel": 70.0, "naoRess": 2416.82, "ress": 2451.17, "ppa": 300.89, "reembolsavel": 737531.04, "impacto": 5283117.64}, "2025": {"total": 88268.54, "cnf": 17135.42, "ene": 54198.25, "rel": 16934.87, "horas": 3286.6, "horasCnf": 948.3, "horasEne": 1787.7, "horasRel": 550.6, "franquiaRel": 83.0, "naoRess": 1194.31, "ress": 15740.56, "ppa": 315.21, "reembolsavel": 4961582.23, "impacto": 27823126.65}, "2026": {"total": 50187.72, "cnf": 6327.72, "ene": 33912.89, "rel": 9947.11, "horas": 2690.4, "horasCnf": 207.9, "horasEne": 2139.9, "horasRel": 342.6, "franquiaRel": 110.0, "naoRess": 8869.98, "ress": 1077.14, "ppa": 329.97, "reembolsavel": 355422.57, "impacto": 16560441.97}}, "mensal": {"cnf": [5172.0, 42.69, 325.56, 635.04, 151.37, 0.0, 1.06, 0.0, 0.0, 0.0, 0.0, 0.0], "ene": [2142.98, 1410.51, 3202.33, 5246.9, 9779.82, 5113.99, 7016.36, 0.0, 0.0, 0.0, 0.0, 0.0], "rel": [5853.94, 177.82, 220.86, 944.12, 829.81, 1751.64, 168.92, 0.0, 0.0, 0.0, 0.0, 0.0], "relReimb": [0.0, 0.0, 133.01, 944.12, 829.81, 1751.64, 168.92, 0.0, 0.0, 0.0, 0.0, 0.0]}, "nMeses": 7, "anoRef": "2026", "arquivo": "Eol Babilônia - Curtailment.xlsx", "geradoEm": "27/07/2026 18:18"};
-const I18N = {"Ano": "Year", "Ano completo": "Full year", "Anual": "Annual", "CNF": "CNF", "CNF = Confiabilidade · ENE = Energético · REL = Restrição c/ ressarcimento": "CNF = Reliability · ENE = Energy · REL = Curtailment with reimbursement", "Composição do ano por razão": "Year composition by reason", "Curtailment": "Curtailment", "Detalhamento por razão": "Breakdown by reason", "Detalhe mensal por razão": "Monthly detail by reason", "ENE": "ENE", "ENE {e}d · REL {r}d · CNF {c}d": "ENE {e}d · REL {r}d · CNF {c}d", "Gerado em": "Generated on", "Histórico anual — restrição total": "Annual history — total curtailment", "Horas YTD": "Hours YTD", "Horas de restrição": "Curtailment hours", "Impacto (R$)": "Impact (R$)", "Impacto do curtailment": "Curtailment impact", "KPI": "KPI", "Mensal": "Monthly", "Mês": "Month", "Não ressarcível": "Non-reimbursable", "Não ressarcível ": "Non-reimbursable ", "Período": "Period", "REL": "REL", "REL fora da franquia": "REL beyond franchise", "REL ressarcível × PPA": "reimbursable REL × PPA", "Razão": "Reason", "Reembolsável": "Reimbursable", "Reembolsável (R$)": "Reimbursable (R$)", "Ressarcível": "Reimbursable", "Ressarcível × não ressarcível (REL)": "Reimbursable × non-reimbursable (REL)", "Restrição mensal por razão": "Monthly curtailment by reason", "Sem dados no recorte.": "No data in the selection.", "Todas": "All", "Todos": "All", "Total": "Total", "Total curtailment": "Total curtailment", "Total de restrições": "Total curtailment", "Total × PPA (R$ {v})": "Total × PPA (R$ {v})", "Valor reembolsável": "Reimbursable amount", "Visão geral": "Overview", "YTD": "YTD", "YTD (GWh)": "YTD (GWh)", "perda que não volta": "loss that does not return", "restrições de geração (ONS)": "generation curtailment (ONS)", "{v} MWh cortados": "{v} MWh curtailed", "{v} MWh ressarcíveis": "{v} MWh reimbursable", "{v} dias equivalentes": "{v} equivalent days"};
+const D = {"anual": {"2021": {"total": 13.82, "cnf": 1.99, "ene": 2.62, "rel": 9.21, "horas": 14.7, "horasCnf": 2.4, "horasEne": 10.8, "horasRel": 1.5, "franquiaRel": 78.0, "naoRess": 9.21, "ress": 0.0, "ppa": 0.0, "reembolsavel": 0.0, "impacto": 0.0}, "2022": {"total": 1574.12, "cnf": 751.47, "ene": 14.12, "rel": 808.53, "horas": 139.1, "horasCnf": 83.0, "horasEne": 15.1, "horasRel": 41.0, "franquiaRel": 59.0, "naoRess": 808.53, "ress": 0.0, "ppa": 269.62, "reembolsavel": 0.0, "impacto": 424415.45}, "2023": {"total": 2959.28, "cnf": 1864.98, "ene": 698.65, "rel": 395.65, "horas": 516.2, "horasCnf": 108.0, "horasEne": 335.9, "horasRel": 72.3, "franquiaRel": 61.0, "naoRess": 290.94, "ress": 104.7, "ppa": 287.06, "reembolsavel": 30056.33, "impacto": 849491.2}, "2024": {"total": 17558.3, "cnf": 4952.97, "ene": 7737.34, "rel": 4867.99, "horas": 1575.2, "horasCnf": 740.1, "horasEne": 643.8, "horasRel": 191.4, "franquiaRel": 70.0, "naoRess": 2416.82, "ress": 2451.17, "ppa": 300.89, "reembolsavel": 737531.04, "impacto": 5283117.64}, "2025": {"total": 88268.54, "cnf": 17135.42, "ene": 54198.25, "rel": 16934.87, "horas": 3286.6, "horasCnf": 948.3, "horasEne": 1787.7, "horasRel": 550.6, "franquiaRel": 83.0, "naoRess": 1194.31, "ress": 15740.56, "ppa": 315.21, "reembolsavel": 4961582.23, "impacto": 27823126.65}, "2026": {"total": 50187.72, "cnf": 6327.72, "ene": 33912.89, "rel": 9947.11, "horas": 2690.4, "horasCnf": 207.9, "horasEne": 2139.9, "horasRel": 342.6, "franquiaRel": 110.0, "naoRess": 8869.98, "ress": 1077.14, "ppa": 329.97, "reembolsavel": 355422.57, "impacto": 16560441.97}}, "mensal": {"cnf": [5172.0, 42.69, 325.56, 635.04, 151.37, 0.0, 1.06, 0.0, 0.0, 0.0, 0.0, 0.0], "ene": [2142.98, 1410.51, 3202.33, 5246.9, 9779.82, 5113.99, 7016.36, 0.0, 0.0, 0.0, 0.0, 0.0], "rel": [5853.94, 177.82, 220.86, 944.12, 829.81, 1751.64, 168.92, 0.0, 0.0, 0.0, 0.0, 0.0], "relReimb": [0.0, 0.0, 133.01, 944.12, 829.81, 1751.64, 168.92, 0.0, 0.0, 0.0, 0.0, 0.0]}, "nMeses": 7, "anoRef": "2026", "arquivo": "Eol Babilônia - Curtailment.xlsx", "geradoEm": "27/07/2026 18:35"};
+const I18N = {"Ano": "Year", "Ano completo": "Full year", "Anual": "Annual", "CNF": "CNF", "CNF = Confiabilidade · ENE = Energético · REL = Restrição c/ ressarcimento": "CNF = Reliability · ENE = Energy · REL = Curtailment with reimbursement", "Composição do ano por razão": "Year composition by reason", "Curtailment": "Curtailment", "Detalhamento por razão": "Breakdown by reason", "Detalhe mensal por razão": "Monthly detail by reason", "ENE": "ENE", "ENE {e}d · REL {r}d · CNF {c}d": "ENE {e}d · REL {r}d · CNF {c}d", "Gerado em": "Generated on", "Histórico anual — restrição total": "Annual history — total curtailment", "Horas de restrição": "Curtailment hours", "Impacto (R$)": "Impact (R$)", "Impacto do curtailment": "Curtailment impact", "KPI": "KPI", "Mensal": "Monthly", "Mês": "Month", "Não ressarcível": "Non-reimbursable", "Não ressarcível ": "Non-reimbursable ", "Período": "Period", "REL": "REL", "REL fora da franquia": "REL beyond franchise", "REL ressarcível × PPA": "reimbursable REL × PPA", "Razão": "Reason", "Reembolsável": "Reimbursable", "Reembolsável (R$)": "Reimbursable (R$)", "Ressarcível": "Reimbursable", "Ressarcível × não ressarcível (REL)": "Reimbursable × non-reimbursable (REL)", "Restrição mensal por razão": "Monthly curtailment by reason", "Sem dados no recorte.": "No data in the selection.", "Todas": "All", "Todos": "All", "Total": "Total", "Total curtailment": "Total curtailment", "Total de restrições": "Total curtailment", "Total × PPA (R$ {v})": "Total × PPA (R$ {v})", "Valor reembolsável": "Reimbursable amount", "Visão geral": "Overview", "YTD": "YTD", "perda que não volta": "loss that does not return", "restrições de geração (ONS)": "generation curtailment (ONS)", "{v} MWh cortados": "{v} MWh curtailed", "{v} MWh ressarcíveis": "{v} MWh reimbursable", "{v} dias equivalentes": "{v} equivalent days"};
 
 let LANG='pt';
 try{ const s=localStorage.getItem('aether_curt_lang'); if(s==='en'||s==='pt') LANG=s; }catch(e){}
@@ -196,12 +197,12 @@ function reais(v){
 function anoData(){ return D.anual[fAno] || {}; }
 
 function kpis(){
-  const p=periodoTotais(), y=ytdTotais();
+  const p=periodoTotais(), y=ytdTotais(), a=anoData();
   const cards=[
     ['imp','Impacto do curtailment', reais(p.impacto)],
     ['ree','Valor reembolsável', reais(p.reemb*y.ppa)],
     ['nao','Não ressarcível', nb(p.naoRess,0)+'<small> MWh</small>'],
-    ['hor','Horas de restrição (ano)', nb(y.horas,0)+'<small> h</small>'],
+    ['hor','Horas de restrição (ano)', nb(a.horas||0,0)+'<small> h</small>'],
   ];
   document.getElementById('kpis').innerHTML=cards.map(c=>
     '<div class="kpi '+c[0]+'"><div class="rot">'+t(c[1])+'</div>'+
@@ -225,26 +226,52 @@ function periodoLabel(){
   return '';
 }
 
-// totais YTD do ano selecionado, em MWh.
-// para o ano de referência (em andamento), NÃO confiamos no total/cnf/ene/rel
-// da tabela anual: esses campos já vêm com um valor adiantado do mês seguinte
-// (ainda não confirmado no detalhamento mensal). Somamos só os meses válidos
-// (0..nMeses-1), a mesma fonte já usada no "Detalhe mensal por razão" — assim
-// os dois quadros nunca divergem. Reembolsável/horas não têm esse problema
-// (vêm de colunas próprias da tabela anual, já líquidas da franquia REL).
+// mês final (índice 0-11) coberto pelo recorte ativo. "YTD" é sempre o
+// acumulado de jan até esse mês — se você filtra um mês ou trimestre
+// específico, o YTD acompanha (acumulado até ali), não fica travado no
+// último mês disponível do ano.
+function mesFinalAtivo(){
+  if(!podeDetalharPeriodo()) return -1;
+  const p=periodoAtivo();
+  if(p==='ytd') return D.nMeses-1;
+  if(p[0]==='m') return parseInt(p.slice(1),10);
+  if(p[0]==='q'){ const q=parseInt(p.slice(1),10); return Math.min(q*3-1, D.nMeses-1); }
+  return D.nMeses-1;
+}
+
+function ytdLabel(){
+  const fim=mesFinalAtivo();
+  if(fim<0) return t('YTD');
+  return t('YTD')+' ('+M3[LANG][fim]+'/'+fAno.slice(2)+')';
+}
+
+// totais acumulados de jan até o mês final do recorte ativo, em MWh.
+// para o ano de referência (em andamento), somamos os meses da mesma fonte
+// já usada no "Detalhe mensal por razão" — assim os quadros nunca divergem.
+// reembolsável: quando o acumulado cobre o ano inteiro disponível, usa a
+// coluna oficial "Ressarcível REL" (já líquida da franquia anual); num
+// recorte parcial (até um mês/trimestre específico) não há essa franquia
+// calculada por mês, então somamos a linha "Reimbursement" (estimativa,
+// REL classificado como ressarcível antes do desconto de franquia).
 function ytdTotais(){
   const a=anoData();
   const ppa=a.ppa||0;
-  if(podeDetalharPeriodo()){
+  const fim=mesFinalAtivo();
+  if(fim>=0){
     let cnf=0,ene=0,rel=0;
-    for(let i=0;i<D.nMeses;i++){ cnf+=D.mensal.cnf[i]||0; ene+=D.mensal.ene[i]||0; rel+=D.mensal.rel[i]||0; }
-    const total=cnf+ene+rel, reemb=a.ress||0;
-    return {total, cnf, ene, rel, reemb, naoRess:rel-reemb, impacto:total*ppa,
-      horas:a.horas||0, horasCnf:a.horasCnf||0, horasEne:a.horasEne||0, horasRel:a.horasRel||0, ppa};
+    for(let i=0;i<=fim;i++){ cnf+=D.mensal.cnf[i]||0; ene+=D.mensal.ene[i]||0; rel+=D.mensal.rel[i]||0; }
+    const total=cnf+ene+rel;
+    let reemb;
+    if(fim===D.nMeses-1){
+      reemb=a.ress||0;
+    } else {
+      reemb=0;
+      for(let i=0;i<=fim;i++){ reemb+=D.mensal.relReimb[i]||0; }
+    }
+    return {total, cnf, ene, rel, reemb, naoRess:rel-reemb, impacto:total*ppa, ppa};
   }
   return {total:a.total||0, cnf:a.cnf||0, ene:a.ene||0, rel:a.rel||0, reemb:a.ress||0,
-    naoRess:a.naoRess||0, impacto:a.impacto||0,
-    horas:a.horas||0, horasCnf:a.horasCnf||0, horasEne:a.horasEne||0, horasRel:a.horasRel||0, ppa};
+    naoRess:a.naoRess||0, impacto:a.impacto||0, ppa};
 }
 
 // totais do período selecionado (mês/trimestre/ano completo), em MWh.
@@ -252,7 +279,7 @@ function ytdTotais(){
 // ressarcível naquele recorte, pela linha "Reimbursement" da planilha) —
 // ainda não passou pelo desconto da franquia anual, que só se aplica ao
 // acumulado do ano. Por isso o % do período e o % do YTD não são direta-
-// mente comparáveis; o YTD é o valor final, líquido de franquia.
+// mente comparáveis quando o YTD cobre o ano inteiro.
 function periodoTotais(){
   const p=periodoAtivo();
   const y=ytdTotais();
@@ -282,6 +309,7 @@ function visaoGeral(){
   const pctP = p.total>0 ? p.reemb/p.total*100 : 0;
   const pctY = y.total>0 ? y.reemb/y.total*100 : 0;
   document.getElementById('thPeriodoGeral').textContent = periodoLabel();
+  document.getElementById('thYtdGeral').textContent = ytdLabel();
   const linhas=[
     [t('Total curtailment'), nb(gwh(p.total),2)+' GWh', nb(gwh(y.total),2)+' GWh'],
     [t('Reembolsável'),
@@ -295,15 +323,16 @@ function visaoGeral(){
 function detalhamentoRazao(){
   const p=periodoTotais(), y=ytdTotais();
   document.getElementById('thPeriodoRazao').textContent = periodoLabel()+' (GWh)';
+  document.getElementById('thYtdRazao').textContent = ytdLabel()+' (GWh)';
   const linhas=[
-    ['CNF', p.cnf, y.cnf, y.horasCnf],
-    ['ENE', p.ene, y.ene, y.horasEne],
-    ['REL', p.rel, y.rel, y.horasRel],
+    ['CNF', p.cnf, y.cnf],
+    ['ENE', p.ene, y.ene],
+    ['REL', p.rel, y.rel],
   ];
   let h = linhas.map(l=>
-    '<tr><td>'+l[0]+'</td><td>'+nb(gwh(l[1]),2)+'</td><td>'+nb(gwh(l[2]),2)+'</td><td>'+nb(l[3],0)+'</td></tr>').join('');
+    '<tr><td>'+l[0]+'</td><td>'+nb(gwh(l[1]),2)+'</td><td>'+nb(gwh(l[2]),2)+'</td></tr>').join('');
   h += '<tr class="tot"><td>'+t('Total')+'</td><td>'+nb(gwh(p.cnf+p.ene+p.rel),2)+'</td>'+
-    '<td>'+nb(gwh(y.cnf+y.ene+y.rel),2)+'</td><td>'+nb(y.horas,0)+'</td></tr>';
+    '<td>'+nb(gwh(y.cnf+y.ene+y.rel),2)+'</td></tr>';
   document.getElementById('tbodyRazao').innerHTML = h;
 }
 
