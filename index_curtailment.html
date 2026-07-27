@@ -44,7 +44,7 @@ h2::after{content:'';display:block;width:32px;height:2px;background:var(--azul3)
   font-size:13px;font-family:inherit;color:var(--txt);background:#fff;min-width:130px}
 .fgrp select:focus{outline:2px solid var(--azul3);outline-offset:-1px}
 .cont{margin-left:auto;font-size:11px;color:var(--txt3)}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:6px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
 .kpi{background:var(--card);border:1px solid var(--linha);border-radius:8px;
   padding:14px 17px;border-top:3px solid var(--azul)}
 .kpi.imp{border-top-color:var(--azul2)}
@@ -86,24 +86,49 @@ tr.tot td{font-weight:700;background:var(--azul2);color:#fff;border:none}
 </head>
 <body>
 <div class="top">
-  <div class="tt"><small data-i18n="AETHER · PMO — Complexo Babilônia">AETHER · PMO — Complexo Babilônia</small>
-    <span data-i18n="Curtailment">Curtailment</span></div>
+  <div class="tt"><span data-i18n="Curtailment">Curtailment</span></div>
   <div class="dir">
     <div class="meta" id="metaHdr"></div>
     <button class="lang" id="btnLang"><span>&#127760;</span><span id="langTxt">EN</span></button>
-    <div class="meta" style="font-size:15px;font-weight:600;color:var(--azul)">HRZ
-      <span style="font-weight:300;color:var(--txt3)">energia</span></div>
   </div>
 </div>
 <div class="wrap">
 
   <div class="filtros">
     <div class="fgrp"><label data-i18n="Ano">Ano</label><select id="fAno"></select></div>
+    <div class="fgrp"><label data-i18n="Mês">Mês</label><select id="fMes"></select></div>
+    <div class="fgrp"><label data-i18n="Período">Período</label><select id="fPeriodo"></select></div>
     <div class="fgrp"><label data-i18n="Razão">Razão</label><select id="fRazao"></select></div>
     <div class="cont" id="contador"></div>
   </div>
 
   <div class="kpis" id="kpis"></div>
+
+  <div class="card">
+    <h2 data-i18n="Visão geral">Visão geral</h2>
+    <table>
+      <thead><tr>
+        <th data-i18n="KPI">KPI</th>
+        <th id="thPeriodoGeral">Período</th>
+        <th data-i18n="YTD">YTD</th>
+      </tr></thead>
+      <tbody id="tbodyGeral"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="Detalhamento por razão">Detalhamento por razão</h2>
+    <table>
+      <thead><tr>
+        <th data-i18n="Razão">Razão</th>
+        <th id="thPeriodoRazao">Período (GWh)</th>
+        <th data-i18n="YTD (GWh)">YTD (GWh)</th>
+        <th data-i18n="Horas YTD">Horas YTD</th>
+      </tr></thead>
+      <tbody id="tbodyRazao"></tbody>
+    </table>
+  </div>
+
   <div class="legcap" id="legcap"></div>
 
   <div class="cols2">
@@ -149,13 +174,12 @@ tr.tot td{font-weight:700;background:var(--azul2);color:#fff;border:none}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-const D = {"anual": {"2021": {"total": 13.82, "cnf": 1.99, "ene": 2.62, "rel": 9.21, "horas": 14.7, "horasCnf": 2.4, "horasEne": 10.8, "horasRel": 1.5, "franquiaRel": 78.0, "naoRess": 9.21, "ress": 0.0, "ppa": 0.0, "reembolsavel": 0.0, "impacto": 0.0}, "2022": {"total": 1574.12, "cnf": 751.47, "ene": 14.12, "rel": 808.53, "horas": 139.1, "horasCnf": 83.0, "horasEne": 15.1, "horasRel": 41.0, "franquiaRel": 59.0, "naoRess": 808.53, "ress": 0.0, "ppa": 269.62, "reembolsavel": 0.0, "impacto": 424415.45}, "2023": {"total": 2959.28, "cnf": 1864.98, "ene": 698.65, "rel": 395.65, "horas": 516.2, "horasCnf": 108.0, "horasEne": 335.9, "horasRel": 72.3, "franquiaRel": 61.0, "naoRess": 290.94, "ress": 104.7, "ppa": 287.06, "reembolsavel": 30056.33, "impacto": 849491.2}, "2024": {"total": 17558.3, "cnf": 4952.97, "ene": 7737.34, "rel": 4867.99, "horas": 1575.2, "horasCnf": 740.1, "horasEne": 643.8, "horasRel": 191.4, "franquiaRel": 70.0, "naoRess": 2416.82, "ress": 2451.17, "ppa": 300.89, "reembolsavel": 737531.04, "impacto": 5283117.64}, "2025": {"total": 88268.54, "cnf": 17135.42, "ene": 54198.25, "rel": 16934.87, "horas": 3286.6, "horasCnf": 948.3, "horasEne": 1787.7, "horasRel": 550.6, "franquiaRel": 83.0, "naoRess": 1194.31, "ress": 15740.56, "ppa": 315.21, "reembolsavel": 4961582.23, "impacto": 27823126.65}, "2026": {"total": 50187.72, "cnf": 6327.72, "ene": 33912.89, "rel": 9947.11, "horas": 2690.4, "horasCnf": 207.9, "horasEne": 2139.9, "horasRel": 342.6, "franquiaRel": 110.0, "naoRess": 8869.98, "ress": 1077.14, "ppa": 329.97, "reembolsavel": 355422.57, "impacto": 16560441.97}}, "mensal": {"cnf": [5171.99, 42.69, 325.56, 635.04, 151.37, 1.06, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "ene": [2142.98, 1410.51, 3202.33, 5246.9, 9779.82, 5113.99, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "rel": [5853.94, 177.82, 87.84, 944.12, 829.81, 1751.64, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}, "nMeses": 6, "anoRef": "2026", "arquivo": "Eol Babilônia - Curtailment.xlsx", "geradoEm": "27/07/2026 16:36"};
-const I18N = {"AETHER · PMO — Complexo Babilônia": "AETHER · PMO — Babilônia Complex", "Ano": "Year", "Anual": "Annual", "CNF": "CNF", "CNF = Confiabilidade · ENE = Energético · REL = Restrição c/ ressarcimento": "CNF = Reliability · ENE = Energy · REL = Curtailment with reimbursement", "Composição do ano por razão": "Year composition by reason", "Curtailment": "Curtailment", "Detalhe mensal por razão": "Monthly detail by reason", "ENE": "ENE", "ENE {e}d · REL {r}d · CNF {c}d": "ENE {e}d · REL {r}d · CNF {c}d", "Gerado em": "Generated on", "Histórico anual — restrição total": "Annual history — total curtailment", "Horas de restrição": "Curtailment hours", "Impacto (R$)": "Impact (R$)", "Impacto do curtailment": "Curtailment impact", "Mensal": "Monthly", "Mês": "Month", "Não ressarcível": "Non-reimbursable", "Não ressarcível ": "Non-reimbursable ", "REL": "REL", "REL fora da franquia": "REL beyond franchise", "REL ressarcível × PPA": "reimbursable REL × PPA", "Razão": "Reason", "Reembolsável (R$)": "Reimbursable (R$)", "Ressarcível": "Reimbursable", "Ressarcível × não ressarcível (REL)": "Reimbursable × non-reimbursable (REL)", "Restrição mensal por razão": "Monthly curtailment by reason", "Sem dados no recorte.": "No data in the selection.", "Todas": "All", "Todos": "All", "Total": "Total", "Total de restrições": "Total curtailment", "Total × PPA (R$ {v})": "Total × PPA (R$ {v})", "Valor reembolsável": "Reimbursable amount", "perda que não volta": "loss that does not return", "restrições de geração (ONS)": "generation curtailment (ONS)", "{v} MWh cortados": "{v} MWh curtailed", "{v} MWh ressarcíveis": "{v} MWh reimbursable", "{v} dias equivalentes": "{v} equivalent days"};
+const D = {"anual": {"2021": {"total": 13.82, "cnf": 1.99, "ene": 2.62, "rel": 9.21, "horas": 14.7, "horasCnf": 2.4, "horasEne": 10.8, "horasRel": 1.5, "franquiaRel": 78.0, "naoRess": 9.21, "ress": 0.0, "ppa": 0.0, "reembolsavel": 0.0, "impacto": 0.0}, "2022": {"total": 1574.12, "cnf": 751.47, "ene": 14.12, "rel": 808.53, "horas": 139.1, "horasCnf": 83.0, "horasEne": 15.1, "horasRel": 41.0, "franquiaRel": 59.0, "naoRess": 808.53, "ress": 0.0, "ppa": 269.62, "reembolsavel": 0.0, "impacto": 424415.45}, "2023": {"total": 2959.28, "cnf": 1864.98, "ene": 698.65, "rel": 395.65, "horas": 516.2, "horasCnf": 108.0, "horasEne": 335.9, "horasRel": 72.3, "franquiaRel": 61.0, "naoRess": 290.94, "ress": 104.7, "ppa": 287.06, "reembolsavel": 30056.33, "impacto": 849491.2}, "2024": {"total": 17558.3, "cnf": 4952.97, "ene": 7737.34, "rel": 4867.99, "horas": 1575.2, "horasCnf": 740.1, "horasEne": 643.8, "horasRel": 191.4, "franquiaRel": 70.0, "naoRess": 2416.82, "ress": 2451.17, "ppa": 300.89, "reembolsavel": 737531.04, "impacto": 5283117.64}, "2025": {"total": 88268.54, "cnf": 17135.42, "ene": 54198.25, "rel": 16934.87, "horas": 3286.6, "horasCnf": 948.3, "horasEne": 1787.7, "horasRel": 550.6, "franquiaRel": 83.0, "naoRess": 1194.31, "ress": 15740.56, "ppa": 315.21, "reembolsavel": 4961582.23, "impacto": 27823126.65}, "2026": {"total": 50187.72, "cnf": 6327.72, "ene": 33912.89, "rel": 9947.11, "horas": 2690.4, "horasCnf": 207.9, "horasEne": 2139.9, "horasRel": 342.6, "franquiaRel": 110.0, "naoRess": 8869.98, "ress": 1077.14, "ppa": 329.97, "reembolsavel": 355422.57, "impacto": 16560441.97}}, "mensal": {"cnf": [5171.99, 42.69, 325.56, 635.04, 151.37, 1.06, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "ene": [2142.98, 1410.51, 3202.33, 5246.9, 9779.82, 5113.99, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "rel": [5853.94, 177.82, 87.84, 944.12, 829.81, 1751.64, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "relReimb": [0.0, 0.0, 133.01, 944.12, 829.81, 1751.64, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]}, "nMeses": 6, "anoRef": "2026", "arquivo": "Eol Babilônia - Curtailment.xlsx", "geradoEm": "27/07/2026 17:17"};
+const I18N = {"Ano": "Year", "Ano completo": "Full year", "Anual": "Annual", "CNF": "CNF", "CNF = Confiabilidade · ENE = Energético · REL = Restrição c/ ressarcimento": "CNF = Reliability · ENE = Energy · REL = Curtailment with reimbursement", "Composição do ano por razão": "Year composition by reason", "Curtailment": "Curtailment", "Detalhamento por razão": "Breakdown by reason", "Detalhe mensal por razão": "Monthly detail by reason", "ENE": "ENE", "ENE {e}d · REL {r}d · CNF {c}d": "ENE {e}d · REL {r}d · CNF {c}d", "Gerado em": "Generated on", "Histórico anual — restrição total": "Annual history — total curtailment", "Horas YTD": "Hours YTD", "Horas de restrição": "Curtailment hours", "Impacto (R$)": "Impact (R$)", "Impacto do curtailment": "Curtailment impact", "KPI": "KPI", "Mensal": "Monthly", "Mês": "Month", "Não ressarcível": "Non-reimbursable", "Não ressarcível ": "Non-reimbursable ", "Período": "Period", "REL": "REL", "REL fora da franquia": "REL beyond franchise", "REL ressarcível × PPA": "reimbursable REL × PPA", "Razão": "Reason", "Reembolsável": "Reimbursable", "Reembolsável (R$)": "Reimbursable (R$)", "Ressarcível": "Reimbursable", "Ressarcível × não ressarcível (REL)": "Reimbursable × non-reimbursable (REL)", "Restrição mensal por razão": "Monthly curtailment by reason", "Sem dados no recorte.": "No data in the selection.", "Todas": "All", "Todos": "All", "Total": "Total", "Total curtailment": "Total curtailment", "Total de restrições": "Total curtailment", "Total × PPA (R$ {v})": "Total × PPA (R$ {v})", "Valor reembolsável": "Reimbursable amount", "Visão geral": "Overview", "YTD": "YTD", "YTD (GWh)": "YTD (GWh)", "perda que não volta": "loss that does not return", "restrições de geração (ONS)": "generation curtailment (ONS)", "{v} MWh cortados": "{v} MWh curtailed", "{v} MWh ressarcíveis": "{v} MWh reimbursable", "{v} dias equivalentes": "{v} equivalent days"};
 
 let LANG='pt';
 try{ const s=localStorage.getItem('aether_curt_lang'); if(s==='en'||s==='pt') LANG=s; }catch(e){}
 function t(s){ return LANG==='en' ? (I18N[s]||s) : s; }
-function tf(s,vals){ let r=t(s); for(const k in vals) r=r.split('{'+k+'}').join(vals[k]); return r; }
 const M3={pt:['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'],
           en:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']};
 
@@ -163,6 +187,8 @@ const CNF='#0D1E3D', ENE='#3866A6', REL='#7FA8D9', CINZA='#B9BDC4';
 
 let fAno = D.anoRef;
 let fRazao = '';
+let fMes = '';       // '' = nenhum mês isolado escolhido; senão índice 0-11 (string)
+let fPeriodo = 'ytd'; // 'ytd' ou 'q1'..'q4' — só vale quando fMes==''
 
 function nb(v,dec){ if(v==null)return '—';
   const s=Number(v).toLocaleString(LANG==='en'?'en-US':'pt-BR',
@@ -173,6 +199,7 @@ function reais(v){
   if(v>=1e3) return 'R$ '+nb(v/1e3,0)+' mil';
   return 'R$ '+nb(v,0);
 }
+function tf(s,vals){ let r=t(s); for(const k in vals) r=r.split('{'+k+'}').join(vals[k]); return r; }
 
 function anoData(){ return D.anual[fAno] || {}; }
 
@@ -201,6 +228,83 @@ function kpis(){
     '<div class="val">'+c[2]+(c[3]?'<small> '+c[3]+'</small>':'')+'</div>'+
     '<span class="selo '+c[4]+'">'+c[5]+'</span>'+
     '<div class="nota">'+c[6]+'</div></div>').join('');
+}
+
+// só há detalhe mensal para o ano de referência (mensal = ano corrente na planilha)
+function podeDetalharPeriodo(){ return fAno===D.anoRef && D.nMeses>0; }
+
+// código efetivo do recorte: 'mN' (mês isolado) tem prioridade sobre 'qN'/'ytd'
+function periodoAtivo(){
+  if(fMes!=='') return 'm'+fMes;
+  return fPeriodo;
+}
+
+function periodoLabel(){
+  const p=periodoAtivo();
+  if(p==='ytd') return t('Ano completo');
+  if(p[0]==='m') return M3[LANG][parseInt(p.slice(1),10)]+'/'+fAno.slice(2);
+  if(p[0]==='q') return 'T'+p.slice(1)+'/'+fAno.slice(2);
+  return '';
+}
+
+// totais do período selecionado (mês/trimestre/ano completo), em MWh
+function periodoTotais(){
+  const p=periodoAtivo();
+  if(p==='ytd' || !podeDetalharPeriodo()){
+    const a=anoData();
+    return {total:a.total||0, reemb:a.ress||0, cnf:a.cnf||0, ene:a.ene||0, rel:a.rel||0};
+  }
+  let meses=[];
+  if(p[0]==='m'){
+    meses=[parseInt(p.slice(1),10)];
+  } else if(p[0]==='q'){
+    const q=parseInt(p.slice(1),10);
+    meses=[(q-1)*3,(q-1)*3+1,(q-1)*3+2];
+  }
+  let cnf=0,ene=0,rel=0,reemb=0;
+  meses.forEach(i=>{
+    if(i<0||i>=12) return;
+    cnf+=D.mensal.cnf[i]||0; ene+=D.mensal.ene[i]||0; rel+=D.mensal.rel[i]||0;
+    reemb+=D.mensal.relReimb[i]||0;
+  });
+  return {total:cnf+ene+rel, reemb, cnf, ene, rel};
+}
+
+// totais YTD do ano selecionado (sempre o acumulado do ano, direto da tabela anual), em MWh
+function ytdTotais(){
+  const a=anoData();
+  return {total:a.total||0, reemb:a.ress||0, cnf:a.cnf||0, ene:a.ene||0, rel:a.rel||0,
+    horas:a.horas||0, horasCnf:a.horasCnf||0, horasEne:a.horasEne||0, horasRel:a.horasRel||0};
+}
+
+function visaoGeral(){
+  const p=periodoTotais(), y=ytdTotais();
+  const pctP = p.total>0 ? p.reemb/p.total*100 : 0;
+  const pctY = y.total>0 ? y.reemb/y.total*100 : 0;
+  document.getElementById('thPeriodoGeral').textContent = periodoLabel();
+  const linhas=[
+    [t('Total curtailment'), nb(gwh(p.total),2)+' GWh', nb(gwh(y.total),2)+' GWh'],
+    [t('Reembolsável'),
+      nb(gwh(p.reemb),2)+' GWh ('+nb(pctP,1)+'%)',
+      nb(gwh(y.reemb),2)+' GWh ('+nb(pctY,1)+'%)'],
+  ];
+  document.getElementById('tbodyGeral').innerHTML = linhas.map(l=>
+    '<tr><td>'+l[0]+'</td><td>'+l[1]+'</td><td>'+l[2]+'</td></tr>').join('');
+}
+
+function detalhamentoRazao(){
+  const p=periodoTotais(), y=ytdTotais();
+  document.getElementById('thPeriodoRazao').textContent = periodoLabel()+' (GWh)';
+  const linhas=[
+    ['CNF', p.cnf, y.cnf, y.horasCnf],
+    ['ENE', p.ene, y.ene, y.horasEne],
+    ['REL', p.rel, y.rel, y.horasRel],
+  ];
+  let h = linhas.map(l=>
+    '<tr><td>'+l[0]+'</td><td>'+nb(gwh(l[1]),2)+'</td><td>'+nb(gwh(l[2]),2)+'</td><td>'+nb(l[3],0)+'</td></tr>').join('');
+  h += '<tr class="tot"><td>'+t('Total')+'</td><td>'+nb(gwh(p.cnf+p.ene+p.rel),2)+'</td>'+
+    '<td>'+nb(gwh(y.cnf+y.ene+y.rel),2)+'</td><td>'+nb(y.horas,0)+'</td></tr>';
+  document.getElementById('tbodyRazao').innerHTML = h;
 }
 
 let charts={};
@@ -279,11 +383,32 @@ function filtros(){
   const anos=Object.keys(D.anual).sort().reverse();
   document.getElementById('fAno').innerHTML=
     anos.map(y=>'<option value="'+y+'"'+(y===fAno?' selected':'')+'>'+y+'</option>').join('');
+
+  const detalha=podeDetalharPeriodo();
+
+  let opcoesMes=[['', t('Todos')]];
+  if(detalha){
+    for(let i=0;i<D.nMeses;i++) opcoesMes.push([''+i, M3[LANG][i]+'/'+fAno.slice(2)]);
+  }
+  if(!opcoesMes.some(o=>o[0]===fMes)) fMes='';
+  document.getElementById('fMes').innerHTML=
+    opcoesMes.map(([v,l])=>'<option value="'+v+'"'+(v===fMes?' selected':'')+'>'+l+'</option>').join('');
+
+  let opcoesPeriodo=[['ytd', t('Ano completo')]];
+  if(detalha){
+    for(let q=1;q<=4;q++){
+      if(D.nMeses>(q-1)*3) opcoesPeriodo.push(['q'+q, 'T'+q+'/'+fAno.slice(2)]);
+    }
+  }
+  if(!opcoesPeriodo.some(o=>o[0]===fPeriodo)) fPeriodo='ytd';
+  document.getElementById('fPeriodo').innerHTML=
+    opcoesPeriodo.map(([v,l])=>'<option value="'+v+'"'+(v===fPeriodo?' selected':'')+'>'+l+'</option>').join('');
+
   const razoes=[['','Todas'],['cnf','CNF'],['ene','ENE'],['rel','REL']];
   document.getElementById('fRazao').innerHTML=
     razoes.map(([v,l])=>'<option value="'+v+'"'+(v===fRazao?' selected':'')+'>'+t(l)+'</option>').join('');
   document.getElementById('contador').textContent=
-    fAno+' · '+(fRazao?fRazao.toUpperCase():t('Todas'));
+    fAno+' · '+periodoLabel()+' · '+(fRazao?fRazao.toUpperCase():t('Todas'));
 }
 
 function legenda(){
@@ -306,9 +431,14 @@ function idioma(){
     t('Gerado em')+' '+D.geradoEm+' · '+D.arquivo;
 }
 
-function render(){filtros();idioma();legenda();kpis();graficos();tabela();}
+function render(){filtros();idioma();legenda();kpis();visaoGeral();detalhamentoRazao();graficos();tabela();}
 
-document.getElementById('fAno').addEventListener('change',e=>{fAno=e.target.value;render();});
+document.getElementById('fAno').addEventListener('change',e=>{
+  fAno=e.target.value;fMes='';fPeriodo='ytd';render();});
+document.getElementById('fMes').addEventListener('change',e=>{
+  fMes=e.target.value;render();});
+document.getElementById('fPeriodo').addEventListener('change',e=>{
+  fPeriodo=e.target.value;fMes='';render();});
 document.getElementById('fRazao').addEventListener('change',e=>{fRazao=e.target.value;render();});
 document.getElementById('btnLang').addEventListener('click',()=>{
   LANG=LANG==='pt'?'en':'pt';
