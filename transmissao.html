@@ -64,14 +64,14 @@
                     </svg>
                     Gestão PV
                 </button>
-                <button class="item" onclick="load('index_disponibilidade.html', this)">
+                <button class="item active" onclick="load('index_disponibilidade.html', this)">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
                     </svg>
                     Disponibilidade
                 </button>
                 <div class="nav-label" style="margin-top:8px;">Projetos</div>
-                <button class="item active" onclick="load('index_spectra.html', this)">
+                <button class="item" onclick="load('index_spectra.html', this)">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
                     </svg>
@@ -89,7 +89,7 @@
             </div>
         </aside>
         <div class="main" id="main">
-            <iframe src="index_spectra.html"></iframe>
+            <iframe src="index_disponibilidade.html"></iframe>
         </div>
     </div>
     <script>
@@ -109,7 +109,7 @@
             document.getElementById('overlay').classList.toggle('open');
         }
         window.onload = function() {
-            var ultima = location.hash.slice(1) || 'index_spectra.html';
+            var ultima = location.hash.slice(1) || 'index_disponibilidade.html';
             var alvo = null;
             document.querySelectorAll('.item').forEach(function(b) {
                 var onc = b.getAttribute('onclick') || '';
