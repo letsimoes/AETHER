@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AETHER · Geração — HRZ Energia</title>
+<style>
+:root{--bg:#F8F8F6;--card:#FFFFFF;--linha:#E3E3DE;--azul:#1B3A6B;--azul2:#0D1E3D;
+  --azul3:#4A7FBF;--txt:#2C2C2C;--txt2:#6B7280;--txt3:#9CA3AF;
+  --ok:#0F9D58;--warn:#E8A33D;--bad:#C0392B;--cinza:#B9BDC4;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);
+  font-family:'DM Sans','Segoe UI',system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.45}
+.hdr{background:var(--azul2);color:#fff;padding:15px 28px;display:flex;
+  align-items:center;justify-content:space-between}
+.hdr h1{font-size:19px;font-weight:600}
+.hdr .sub{font-size:11px;color:#9DB4D8;margin-top:2px}
+.hdr .dir{display:flex;align-items:center;gap:16px}
+.hdr .meta{font-size:11px;color:#9DB4D8;text-align:right}
+.hdr .marca{font-size:16px;font-weight:600}
+.hdr .marca span{font-weight:300;color:#9DB4D8}
+.lang{background:#1B3A6B;border:1px solid #2F5490;color:#fff;border-radius:16px;
+  padding:5px 13px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer}
+.lang:hover{background:#24487E}
+.wrap{max-width:1440px;margin:0 auto;padding:20px 28px 50px}
+h2{font-size:12px;font-weight:600;color:var(--azul);letter-spacing:.5px;
+  text-transform:uppercase;margin:0 0 12px}
+h2::after{content:'';display:block;width:32px;height:2px;background:var(--azul3);margin-top:5px}
+.card{background:var(--card);border:1px solid var(--linha);border-radius:8px;
+  padding:15px 17px;margin-bottom:16px}
+.filtros{background:var(--card);border:1px solid var(--linha);border-radius:8px;
+  padding:11px 15px;display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-bottom:16px}
+.fgrp{display:flex;flex-direction:column;gap:4px}
+.fgrp label{font-size:10px;color:var(--txt2);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.fgrp select{border:1px solid var(--linha);border-radius:5px;padding:6px 9px;
+  font-size:13px;font-family:inherit;color:var(--txt);background:#fff;min-width:150px}
+.cont{margin-left:auto;font-size:11px;color:var(--txt3)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid var(--linha);border-top:3px solid var(--azul);
+  border-radius:8px;padding:14px 16px}
+.kpi .rot{font-size:10px;color:var(--txt2);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.kpi .per{font-size:10px;color:var(--txt3);margin-top:1px}
+.kpi .val{font-size:27px;font-weight:600;color:var(--azul2);margin:6px 0 3px;font-variant-numeric:tabular-nums}
+.kpi .val small{font-size:14px;color:var(--txt2);font-weight:500}
+.selo{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:11px}
+.selo.up{background:#E7F4EC;color:var(--ok)}
+.selo.dn{background:#FBEAE8;color:var(--bad)}
+.selo.na{background:#F0F0EC;color:var(--txt3)}
+.kpi .nota{font-size:10px;color:var(--txt3);margin-top:5px}
+.cols{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;align-items:stretch;margin-bottom:0}
+.cols .card{margin-bottom:16px;display:flex;flex-direction:column}
+.chartbox{position:relative;height:230px;flex:1;min-height:200px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{background:var(--azul);color:#fff;font-weight:600;font-size:10.5px;
+  text-transform:uppercase;letter-spacing:.4px;padding:8px 10px;text-align:right}
+thead th:first-child{text-align:left}
+tbody td{padding:6px 10px;border-bottom:1px solid var(--linha);text-align:right;font-variant-numeric:tabular-nums}
+tbody td:first-child{text-align:left}
+tr.tot td{font-weight:700;background:var(--azul2);color:#fff;border:none}
+.t-ok{color:var(--ok)}.t-bad{color:var(--bad)}.vazio{color:var(--txt3)}
+.rank{font-size:12px}
+.ranktit{font-size:10px;font-weight:600;color:var(--txt2);text-transform:uppercase;
+  letter-spacing:.5px;margin-bottom:4px}
+.rankrow{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--linha)}
+.rankrow:last-child{border-bottom:none}
+.t-zero{color:#9CA3AF}
+.rankaviso{margin-top:10px;font-size:10px;color:var(--bad);background:#FBEAE8;
+  border-radius:5px;padding:7px 9px;line-height:1.5}
+.rodape{margin-top:22px;padding-top:14px;border-top:1px solid var(--linha);
+  font-size:10px;color:var(--txt3);line-height:1.7}
+@media(max-width:1100px){.cols{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div>
+    <h1 data-i18n="Geração">Geração</h1>
+    <div class="sub" data-i18n="AETHER · PMO — Complexo Babilônia">AETHER · PMO — Complexo Babilônia</div>
+  </div>
+  <div class="dir">
+    <div class="meta" id="metaHdr"></div>
+    <button class="lang" id="btnLang"><span>&#127760;</span> <span id="langTxt">EN</span></button>
+    <div class="marca">HRZ <span>energia</span></div>
+  </div>
+</div>
+<div class="wrap">
+  <div class="filtros">
+    <div class="fgrp"><label data-i18n="Parque">Parque</label><select id="fSpe"></select></div>
+    <div class="fgrp"><label data-i18n="Mês de referência">Mês de referência</label><select id="fMes"></select></div>
+    <div class="cont" id="contador"></div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="cols">
+    <div class="card">
+      <h2><span data-i18n="Realizado × Meta">Realizado × Meta</span> — <span id="anoT"></span> (GWh)</h2>
+      <div class="chartbox"><canvas id="cRM" role="img" aria-label="Realizado versus meta mensal"></canvas></div>
+    </div>
+    <div class="card">
+      <h2 data-i18n="Produção por parque">Produção por parque</h2>
+      <div class="chartbox"><canvas id="cSpe" role="img" aria-label="Produção por parque"></canvas></div>
+    </div>
+  </div>
+
+  <div class="cols">
+    <div class="card">
+      <h2 data-i18n="Acumulado do ano">Acumulado do ano</h2>
+      <div class="chartbox"><canvas id="cAcc" role="img" aria-label="Realizado e meta acumulados"></canvas></div>
+    </div>
+    <div class="card">
+      <h2 data-i18n="Geração por parque — ranking">Geração por parque — ranking</h2>
+      <div class="rank" id="rank"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="Detalhe mensal">Detalhe mensal</h2>
+    <table>
+      <thead><tr>
+        <th data-i18n="Mês">Mês</th>
+        <th data-i18n="CCEE (GWh)">CCEE (GWh)</th>
+        <th id="thScada" data-i18n="Medição Way2 (GWh)">Medição Way2 (GWh)</th>
+        <th id="thPerda" data-i18n="Perda (GWh)">Perda (GWh)</th>
+        <th data-i18n="Meta (GWh)">Meta (GWh)</th>
+        <th data-i18n="vs Meta">vs Meta</th>
+        <th data-i18n="Fator de Capacidade">Fator de Capacidade</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="rodape" id="rodape"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const D = {"ano": "2026", "serie": [{"mes": "01", "rot": "jan/26", "real": 32.21, "scada": 33.584, "ccee": 32.21, "perda": -1.374, "perdaPct": -4.09, "meta": 45.51, "por_spe": {"BAB I": 7.136, "BAB II": 7.152, "BAB III": 6.608, "BAB IV": 6.185, "BAB V": 6.504}, "por_turbina": {}, "dias": 31}, {"mes": "02", "rot": "fev/26", "real": 25.02, "scada": 26.2, "ccee": 25.02, "perda": -1.18, "perdaPct": -4.5, "meta": 31.88, "por_spe": {"BAB I": 5.504, "BAB II": 5.597, "BAB III": 5.153, "BAB IV": 4.744, "BAB V": 5.201}, "por_turbina": {}, "dias": 28}, {"mes": "03", "rot": "mar/26", "real": 29.1, "scada": 30.419, "ccee": 29.1, "perda": -1.319, "perdaPct": -4.34, "meta": 47.63, "por_spe": {"BAB I": 6.496, "BAB II": 6.517, "BAB III": 5.795, "BAB IV": 5.224, "BAB V": 6.388}, "por_turbina": {}, "dias": 31}, {"mes": "04", "rot": "abr/26", "real": 42.11, "scada": 43.943, "ccee": 42.11, "perda": -1.833, "perdaPct": -4.17, "meta": 52.99, "por_spe": {"BAB I": 8.51, "BAB II": 9.512, "BAB III": 8.586, "BAB IV": 8.346, "BAB V": 8.99}, "por_turbina": {}, "dias": 30}, {"mes": "05", "rot": "mai/26", "real": 49.91, "scada": 51.808, "ccee": 49.91, "perda": -1.898, "perdaPct": -3.66, "meta": 55.41, "por_spe": {"BAB I": 8.465, "BAB II": 11.299, "BAB III": 10.644, "BAB IV": 10.366, "BAB V": 11.035}, "por_turbina": {}, "dias": 31}, {"mes": "06", "rot": "jun/26", "real": 47.82, "scada": 49.804, "ccee": 47.82, "perda": -1.984, "perdaPct": -3.98, "meta": 64.12, "por_spe": {"BAB I": 10.164, "BAB II": 10.066, "BAB III": 10.325, "BAB IV": 9.023, "BAB V": 10.226}, "por_turbina": {}, "dias": 30}, {"mes": "07", "rot": "jul/26", "real": 53.247, "scada": 53.247, "ccee": null, "perda": null, "perdaPct": null, "meta": 62.0, "por_spe": {"BAB I": 10.893, "BAB II": 10.947, "BAB III": 10.663, "BAB IV": 9.972, "BAB V": 10.772}, "por_turbina": {}, "dias": 31}], "budget_ano": {"01": 45.51, "02": 31.88, "03": 47.63, "04": 52.99, "05": 55.41, "06": 64.12, "07": 62.0, "08": 61.22, "09": 60.29, "10": 61.76, "11": 47.89, "12": 44.13}, "nominal_kw": 170625, "temCCEE": true, "grandezaPrincipal": "Eneat", "geradoEm": "04/08/2026 20:13"};
+const I18N = {"Geração": "Generation", "AETHER · PMO — Complexo Babilônia": "AETHER · PMO — Babilônia Complex", "Gerado em": "Generated on", "Parque": "Wind farm", "Mês de referência": "Reference month", "Todos": "All", "Complexo Babilônia": "Babilônia Complex", "Produção do mês": "Month production", "Acumulado YTD": "YTD accumulated", "Fator de capacidade": "Capacity factor", "Variação vs mês anterior": "Change vs previous month", "vs Meta:": "vs Target:", "Meta:": "Target:", "sem meta": "no target", "sem meta no budget": "no target in budget", "ating.": "attainment", "nominal": "rated", "energia ÷ potência instalada × horas": "energy ÷ installed power × hours", "produção do mês vs anterior": "month vs previous production", "Realizado × Meta": "Actual × Target", "Realizado": "Actual", "Meta": "Target", "Acumulado do ano": "Year-to-date", "Produção por parque": "Production by wind farm", "Turbinas — melhores e piores": "Turbines — best and worst", "Geração por parque — ranking": "Generation by wind farm — ranking", "Medição Way2 (GWh)": "Way2 measurement (GWh)", "Parque(s) sem geração no mês": "Wind farm(s) with no generation this month", "Verificar medição na Way2.": "Check the measurement in Way2.", "energia medida oficial, integralização mensal": "official metered energy, monthly integralization", "grandeza": "quantity", "Medição oficial SCDE — a mesma base do CCEE.": "Official SCDE metering — the same basis as CCEE.", "Detalhe mensal": "Monthly detail", "Mês": "Month", "Realizado (GWh)": "Actual (GWh)", "Meta (GWh)": "Target (GWh)", "CCEE (GWh)": "CCEE (GWh)", "SCADA (GWh)": "SCADA (GWh)", "Perda (GWh)": "Loss (GWh)", "Perda até o CCEE": "Loss down to CCEE", "CCEE − SCADA (LT + centro de gravidade)": "CCEE − SCADA (line + gravity center losses)", "CCEE oficial · SCADA": "official CCEE · SCADA", "SCADA do parque (Delfos)": "wind farm SCADA (Delfos)", "SCADA (sem CCEE no mês)": "SCADA (no CCEE this month)", "Melhores": "Best", "Piores": "Worst", "Turbina(s) com 0 MWh no mês": "Turbine(s) with 0 MWh this month", "Verificar se estava parada ou se faltou dado na Delfos.": "Check whether it was stopped or data was missing in Delfos.", "vs Meta": "vs Target", "Fator de Capacidade": "Capacity Factor", "Total": "Total", "Fonte": "Source", "potência das 65 turbinas somada em energia": "power of the 65 turbines summed into energy", "meta": "target", "mês fechado, agregação 10-min": "closed month, 10-min aggregation", "Conferido contra o Excel do superintendente (SCADA).": "Cross-checked against the superintendent's Excel (SCADA)."};
+const NOMINAL = 170625;
+
+let LANG='pt';
+try{const s=localStorage.getItem('aether_ger_lang');if(s==='en'||s==='pt')LANG=s;}catch(e){}
+function t(s){return LANG==='en'?(I18N[s]||s):s;}
+const M3={pt:['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'],
+          en:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']};
+function rotMes(m){return M3[LANG][parseInt(m)-1]+'/'+D.ano.slice(2);}
+function g2(v){if(v==null)return '—';const s=v.toFixed(2);return (LANG==='en'?s:s.replace('.',','));}
+function g3(v){if(v==null)return '—';const s=v.toFixed(3);return (LANG==='en'?s:s.replace('.',','));}
+function pct(v){if(v==null)return '—';const s=Math.abs(v).toFixed(1);return (v>=0?'+':'−')+(LANG==='en'?s:s.replace('.',','))+'%';}
+
+let fSpe='', fMes=D.serie.length?D.serie[D.serie.length-1].mes:null;
+
+function serieVis(){return D.serie;}
+function regMes(m){return D.serie.find(x=>x.mes===m);}
+function realDe(reg){ if(!reg)return null;
+  if(!fSpe) return reg.real;
+  const v=reg.por_spe[fSpe]; return v==null?null:v; }
+function metaDe(reg){ if(!reg||reg.meta==null)return null;
+  if(!fSpe) return reg.meta;
+  return reg.meta/5.0; }   /* meta é do parque; rateio simples por 5 parques p/ referência */
+
+/* fator de capacidade do mês: energia / (nominal × horas do mês) */
+function fc(reg){ if(!reg)return null;
+  const real=realDe(reg); if(real==null)return null;
+  const horas=reg.dias*24;
+  const nomKW = fSpe ? NOMINAL/5 : NOMINAL;
+  const potMedia = real*1e6/horas;      /* GWh→kWh ÷ h = kW médio */
+  return potMedia/nomKW*100; }
+
+function kpis(){
+  const reg=regMes(fMes);
+  const meses=serieVis();
+  const idx=meses.findIndex(x=>x.mes===fMes);
+  const ate=meses.slice(0,idx+1);
+  const realYTD=ate.reduce((s,x)=>s+(realDe(x)||0),0);
+  const metaYTD=ate.reduce((s,x)=>s+(metaDe(x)||0),0);
+  const real=realDe(reg), meta=metaDe(reg);
+  const dMes = (real!=null&&meta)?((real-meta)/meta*100):null;
+  const dYTD = metaYTD?((realYTD-metaYTD)/metaYTD*100):null;
+  const fcv=fc(reg);
+  function selo(d){ if(d==null)return '<span class="selo na">'+t('sem meta')+'</span>';
+    return '<span class="selo '+(d>=0?'up':'dn')+'">'+t('vs Meta:')+' '+pct(d)+'</span>';}
+  const cards=[
+    ['Produção do mês', reg?rotMes(reg.mes):'—', g2(real), 'GWh', selo(dMes),
+      (fSpe ? t('SCADA do parque (Delfos)')
+            : (reg&&reg.ccee!=null ? t('CCEE oficial · SCADA')+' '+g2(reg.scada)+' GWh'
+                                   : t('SCADA (sem CCEE no mês)')))],
+    ['Acumulado YTD', reg?('jan – '+rotMes(reg.mes)):'—', g2(realYTD), 'GWh', selo(dYTD),
+      metaYTD?t('Meta:')+' '+g2(metaYTD)+' GWh · '+t('ating.')+' '+Math.round(realYTD/metaYTD*100)+'%':'—'],
+    ['Fator de capacidade', reg?rotMes(reg.mes):'—', fcv==null?'—':g2(fcv), '%',
+      '<span class="selo na">'+t('nominal')+' '+(NOMINAL/1000).toFixed(1)+' MW</span>',
+      t('energia ÷ potência instalada × horas')],
+    (function(){
+        // 4º card: perda (CCEE − SCADA) quando há CCEE do parque; senão, variação mensal
+        if(!fSpe && reg && reg.perda!=null){
+          return ['Perda até o CCEE', reg?rotMes(reg.mes):'—', g2(reg.perda), 'GWh',
+            '<span class="selo na">'+(reg.perdaPct!=null?g2(reg.perdaPct)+'%':'')+'</span>',
+            t('CCEE − SCADA (LT + centro de gravidade)')];
+        }
+        const i=meses.findIndex(x=>x.mes===fMes);
+        const varv=(i>0)?(function(){const a=realDe(meses[i]),b=realDe(meses[i-1]);
+          return (a!=null&&b)?g2((a-b)/b*100):'—';})():'—';
+        return ['Variação vs mês anterior','',varv,'%','',t('produção do mês vs anterior')];
+    })()
+  ];
+  document.getElementById('kpis').innerHTML=cards.map(c=>
+    '<div class="kpi"><div class="rot">'+t(c[0])+'</div><div class="per">'+c[1]+'</div>'+
+    '<div class="val">'+c[2]+'<small> '+c[3]+'</small></div>'+c[4]+
+    '<div class="nota">'+c[5]+'</div></div>').join('');
+}
+
+let charts={};
+function destroi(){Object.values(charts).forEach(c=>{try{c.destroy();}catch(e){}});charts={};}
+function graficos(){
+  destroi();
+  const meses=serieVis();
+  const labels=meses.map(x=>rotMes(x.mes));
+  const real=meses.map(x=>realDe(x));
+  const meta=meses.map(x=>metaDe(x));
+  charts.rm=new Chart(document.getElementById('cRM'),{
+    data:{labels:labels,datasets:[
+      {type:'bar',label:t('Realizado'),data:real,backgroundColor:'#1B3A6B',borderRadius:3,barPercentage:0.6},
+      {type:'line',label:t('Meta'),data:meta,borderColor:'#C0392B',borderDash:[5,3],borderWidth:2,pointRadius:2,fill:false}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:true,position:'bottom',labels:{boxWidth:10,font:{size:10}}}},
+      scales:{y:{beginAtZero:true,ticks:{font:{size:10}}},x:{ticks:{font:{size:10}}}}}});
+  let ar=0,am=0; const accR=[],accM=[];
+  meses.forEach(x=>{ar+=(realDe(x)||0);am+=(metaDe(x)||0);accR.push(+ar.toFixed(2));accM.push(+am.toFixed(2));});
+  charts.acc=new Chart(document.getElementById('cAcc'),{
+    data:{labels:labels,datasets:[
+      {type:'line',label:t('Realizado'),data:accR,borderColor:'#1B3A6B',borderWidth:2,pointRadius:2,fill:false},
+      {type:'line',label:t('Meta'),data:accM,borderColor:'#C0392B',borderDash:[5,3],borderWidth:2,pointRadius:2,fill:false}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:true,position:'bottom',labels:{boxWidth:10,font:{size:10}}}},
+      scales:{y:{beginAtZero:true,ticks:{font:{size:9}}},x:{ticks:{font:{size:10}}}}}});
+  const reg=regMes(fMes);
+  const spes=Object.keys(reg?reg.por_spe:{});
+  charts.spe=new Chart(document.getElementById('cSpe'),{
+    type:'bar',
+    data:{labels:spes,datasets:[{data:spes.map(s=>reg.por_spe[s]),
+      backgroundColor:'#1B3A6B',borderRadius:3,barPercentage:0.65}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{ticks:{font:{size:9}}},y:{ticks:{font:{size:10}}}}}});
+}
+
+function rank(){
+  const reg=regMes(fMes);
+  if(!reg){document.getElementById('rank').innerHTML='';return;}
+  // Way2 mede por PARQUE (não por turbina). Ranqueamos os parques do mês.
+  let arr=Object.entries(reg.por_spe||{});
+  arr.sort((a,b)=>b[1]-a[1]);
+  const nf=v=>(v==null?'—':(LANG==='en'?v.toFixed(2):v.toFixed(2).replace('.',','))+' GWh');
+  const linha=(n,v,cls)=>'<div class="rankrow"><span class="'+cls+'">'+n+'</span>'+
+    '<span style="font-variant-numeric:tabular-nums">'+nf(v)+'</span></div>';
+  const zeros=arr.filter(([n,v])=>!v||v<=0).map(([n])=>n);
+  let h='';
+  arr.forEach(([n,v],i)=>{
+    const cls = (!v||v<=0)?'t-zero':(i===0?'t-ok':(i===arr.length-1?'t-bad':''));
+    h+=linha(n,v,cls);
+  });
+  if(zeros.length){
+    h+='<div class="rankaviso">'+t('Parque(s) sem geração no mês')+': '+zeros.join(', ')+
+       '. '+t('Verificar medição na Way2.')+'</div>';
+  }
+  document.getElementById('rank').innerHTML=h;
+}
+
+function tabela(){
+  const meses=serieVis();
+  const mostraCCEE = !fSpe && D.temCCEE;   // colunas CCEE/perda só no total do parque
+  let h='';
+  meses.forEach(x=>{
+    const real=realDe(x),meta=metaDe(x);
+    const d=(real!=null&&meta)?((real-meta)/meta*100):null;
+    const fcv=fc(x);
+    h+='<tr><td>'+rotMes(x.mes)+'</td>'+
+      '<td>'+g3(real)+'</td>'+
+      (mostraCCEE?'<td>'+(x.scada==null?'—':g3(x.scada))+'</td>'+
+                  '<td class="'+(x.perda==null?'vazio':'t-bad')+'">'+(x.perda==null?'—':g3(x.perda))+'</td>':'')+
+      '<td>'+(meta==null?'—':g3(meta))+'</td>'+
+      '<td class="'+(d==null?'vazio':(d>=0?'t-ok':'t-bad'))+'">'+pct(d)+'</td>'+
+      '<td>'+(fcv==null?'—':g2(fcv)+'%')+'</td></tr>';
+  });
+  const real=meses.reduce((s,x)=>s+(realDe(x)||0),0);
+  const meta=meses.reduce((s,x)=>s+(metaDe(x)||0),0);
+  const scada=meses.reduce((s,x)=>s+(x.scada||0),0);
+  const perda=meses.reduce((s,x)=>s+(x.perda||0),0);
+  const d=meta?((real-meta)/meta*100):null;
+  h+='<tr class="tot"><td>'+t('Total')+'</td><td>'+g2(real)+'</td>'+
+    (mostraCCEE?'<td>'+g2(scada)+'</td><td>'+g2(perda)+'</td>':'')+
+    '<td>'+(meta?g2(meta):'—')+'</td><td>'+pct(d)+'</td><td>—</td></tr>';
+  document.getElementById('tbody').innerHTML=h;
+  // cabeçalho: mostra/esconde colunas CCEE conforme o filtro
+  document.getElementById('thScada').style.display = mostraCCEE?'':'none';
+  document.getElementById('thPerda').style.display = mostraCCEE?'':'none';
+}
+
+function filtros(){
+  const spes=Object.keys(D.serie.length?D.serie[0].por_spe:{});
+  document.getElementById('fSpe').innerHTML='<option value="">'+t('Todos')+'</option>'+
+    spes.map(s=>'<option value="'+s+'"'+(s===fSpe?' selected':'')+'>'+s+'</option>').join('');
+  document.getElementById('fMes').innerHTML=D.serie.slice().reverse()
+    .map(x=>'<option value="'+x.mes+'"'+(x.mes===fMes?' selected':'')+'>'+rotMes(x.mes)+'</option>').join('');
+  document.getElementById('contador').textContent=
+    (fSpe||t('Complexo Babilônia'))+' · '+(fMes?rotMes(fMes):'');
+}
+function idioma(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t(el.getAttribute('data-i18n'));});
+  document.getElementById('langTxt').textContent=LANG==='pt'?'EN':'PT';
+  document.getElementById('anoT').textContent=D.ano;
+  document.getElementById('metaHdr').textContent=t('Gerado em')+' '+D.geradoEm;
+  document.documentElement.lang=LANG==='pt'?'pt-BR':'en';
+  document.getElementById('rodape').innerHTML=
+    t('Fonte')+': API Way2/PIM ('+t('energia medida oficial, integralização mensal')+') · '+
+    t('meta')+': budget_geracao.json · '+t('grandeza')+': '+D.grandezaPrincipal+'. '+
+    t('Medição oficial SCDE — a mesma base do CCEE.');
+}
+function render(){filtros();idioma();kpis();graficos();rank();tabela();}
+
+document.getElementById('fSpe').addEventListener('change',e=>{fSpe=e.target.value;render();});
+document.getElementById('fMes').addEventListener('change',e=>{fMes=e.target.value;render();});
+document.getElementById('btnLang').addEventListener('click',()=>{
+  LANG=LANG==='pt'?'en':'pt';try{localStorage.setItem('aether_ger_lang',LANG);}catch(e){}render();});
+render();
+</script>
+</body>
+</html>
