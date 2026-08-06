@@ -101,7 +101,7 @@ h1{font-size:22px;font-weight:600;}
            <div class="p-status" data-pt="Em andamento" data-en="On track">Em andamento</div></div>
     </button>
   </div>
-  <div class="sidebar-footer" data-pt="Atualizado em 06/08/2026 10:54 · HRZ PMO" data-en="Generated on 06/08/2026 10:54 · HRZ PMO">Atualizado em 06/08/2026 10:54 · HRZ PMO</div>
+  <div class="sidebar-footer" data-pt="Atualizado em 06/08/2026 11:00 · HRZ PMO" data-en="Generated on 06/08/2026 11:00 · HRZ PMO">Atualizado em 06/08/2026 11:00 · HRZ PMO</div>
 </div>
 
 <div class="main">
@@ -114,7 +114,7 @@ h1{font-size:22px;font-weight:600;}
       <div>
         <button id="langBtn" onclick="toggleLang()" style="font-family:inherit;font-size:12px;font-weight:600;padding:5px 13px;border-radius:16px;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer;display:inline-flex;align-items:center;gap:6px;">🌐 EN</button>
         <button id="btnGerarPDF" onclick="gerarPDF()" style="margin-left:8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;border:2px solid #8B1A1A;background:transparent;color:#8B1A1A;cursor:pointer;transition:all .2s;" data-pt="⬇ Gerar PDF" data-en="⬇ Export PDF">⬇ Gerar PDF</button>
-        <div class="updated" data-pt="Atualizado em 06/08/2026 10:54" data-en="Updated on 06/08/2026 10:54">Atualizado em 06/08/2026 10:54</div>
+        <div class="updated" data-pt="Atualizado em 06/08/2026 11:00" data-en="Updated on 06/08/2026 11:00">Atualizado em 06/08/2026 11:00</div>
       </div>
     </div>
 
@@ -250,7 +250,7 @@ h1{font-size:22px;font-weight:600;}
               <span style="font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.07em;text-transform:uppercase;min-width:58px;padding-top:6px;" data-pt="Status" data-en="Status">Status</span>
               <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;flex:1;">
                 <button type="button" class="filtro-pill-acao" data-filter-status="atrasada" data-selected="false" onclick="toggleFiltroAcao(this)" data-pt="Atrasadas" data-en="Overdue" style="font-family:'DM Sans',sans-serif;font-size:10px;padding:5px 11px;border:1px solid rgba(60,60,60,0.10);border-radius:999px;background:#fff;color:var(--text2);cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,0.025);">Atrasadas</button>
-                <button type="button" class="filtro-pill-acao" data-filter-status="andamento" data-selected="false" onclick="toggleFiltroAcao(this)" data-pt="Em andamento" data-en="In progress" style="font-family:'DM Sans',sans-serif;font-size:10px;padding:5px 11px;border:1px solid rgba(60,60,60,0.10);border-radius:999px;background:#fff;color:var(--text2);cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,0.025);">Em andamento</button>
+                <button type="button" class="filtro-pill-acao" data-filter-status="andamento" data-selected="true" onclick="toggleFiltroAcao(this)" data-pt="Em andamento" data-en="In progress" style="font-family:'DM Sans',sans-serif;font-size:10px;padding:5px 11px;border:1px solid rgba(27,58,107,0.22);border-radius:999px;background:rgba(27,58,107,0.10);color:var(--accent);font-weight:600;cursor:pointer;box-shadow:0 1px 4px rgba(27,58,107,0.08);">Em andamento</button>
                 <button type="button" class="filtro-pill-acao" data-filter-status="concluida" data-selected="false" onclick="toggleFiltroAcao(this)" data-pt="Concluídas" data-en="Completed" style="font-family:'DM Sans',sans-serif;font-size:10px;padding:5px 11px;border:1px solid rgba(60,60,60,0.10);border-radius:999px;background:#fff;color:var(--text2);cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,0.025);">Concluídas</button>
               </div>
             </div>
@@ -2804,6 +2804,7 @@ function filtrarAcoes() {
     grupo.style.display = visiveis.length > 0 ? '' : 'none';
   });
 }
+filtrarAcoes();
 
 function toggleLang() {
   langAtual = langAtual === 'pt' ? 'en' : 'pt';
